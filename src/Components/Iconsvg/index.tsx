@@ -1,0 +1,28 @@
+import React from "react";
+import Logo from "./Children/Logo";
+import ArowRight from "./ArowRight";
+import ArowLeft from "./ArowLeft";
+import Heart from "./Heart/indext";
+import ArowCategory from "./ArowCategory";
+import PhoneIcon from "./PhoneIcon";
+import CartIcon from "./CartIcon";
+import Account from "./Account";
+import OrderIcon from "./OrderIcon";
+import LocationIcon from "./Location";
+import CategoryIcon from "./CategoryIcon";
+import SearchIcon from "./SearchIcon";
+
+export const SourceIcon = {
+  Logo,
+  CategoryIcon,
+  ArowRight,
+  ArowLeft,
+  Heart,
+  ArowCategory,
+  PhoneIcon,
+  CartIcon,
+  Account,
+  OrderIcon,
+  LocationIcon,
+  SearchIcon,
+};
