@@ -3,7 +3,7 @@ import Image from "next/image";
 const HeaderBanner = () => {
   return (
     <header>
-      <div className="flex bg-[#e9efff] justify-center w-full">
+      <div className="flex bg-[#e9efff] justify-center w-full overflow-hidden">
         <Image
           height={30}
           width={0}

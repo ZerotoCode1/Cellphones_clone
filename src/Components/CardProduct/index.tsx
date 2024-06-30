@@ -43,7 +43,7 @@ const CardProduct = (prop: CardProductProps) => {
           autoplay={
             autoplay ? { delay: autoplay, disableOnInteraction: false } : false
           }
-          loop={loop}
+          loop
           cssMode={true}
           navigation={{ nextEl: `.${next}`, prevEl: `.${pre}` }}
           mousewheel={true}

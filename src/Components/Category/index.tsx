@@ -1,11 +1,12 @@
 import { title } from "process";
 import React from "react";
 import { SourceIcon } from "../Iconsvg";
+import CardSeo from "./components/CardSeo";
 
 const ListCategory = () => {
   return (
     <div
-      className="h-[370px] max-w-[219px] min-w-[219px] rounded-[15px] overflow-auto z-10 "
+      className="h-[370px] relative max-w-[219px] min-w-[219px] rounded-[15px] z-10 "
       style={{
         boxShadow:
           "0 1px 2px 0 rgba(60,64,67,.1),0 2px 6px 2px rgba(60,64,67,.15)",
@@ -14,8 +15,17 @@ const ListCategory = () => {
       {mocData.map((categoryItem, index) => (
         <div
           key={index}
-          className="flex items-center gap-x-2 p-[6px] justify-between cursor-pointer hover:bg-gray-100 hover:text-[#e91e18]"
+          className=" category-hover flex items-center gap-x-2 p-[6px] justify-between cursor-pointer hover:bg-gray-100 hover:text-[#e91e18]"
         >
+          <div
+            style={{
+              boxShadow:
+                "0 1px 2px 0 rgba(60,64,67,.1),0 2px 6px 2px rgba(60,64,67,.15) ",
+            }}
+            className="absolute bg-[#FFFFFF] h-full w-[100vh]  top-0 left-[100%]  rounded-[10px] turnoncategory p-5"
+          >
+            <CardSeo id={index} />
+          </div>
           <div className="flex">
             <i
               style={{

@@ -11,6 +11,11 @@ import OrderIcon from "./OrderIcon";
 import LocationIcon from "./Location";
 import CategoryIcon from "./CategoryIcon";
 import SearchIcon from "./SearchIcon";
+import GoBack from "./GoBack";
+import Delete from "./Delete";
+import Gift from "./Gift";
+import Protect from "./Protect";
+import MoveRight from "./MoveRight";
 
 export const SourceIcon = {
   Logo,
@@ -25,4 +30,9 @@ export const SourceIcon = {
   OrderIcon,
   LocationIcon,
   SearchIcon,
+  GoBack,
+  Delete,
+  Gift,
+  Protect,
+  MoveRight,
 };

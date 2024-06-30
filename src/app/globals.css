@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.color-default{
+    color: #D70018;
+}
 .arrow {
     position: absolute;
     top: 50%;
@@ -94,4 +96,64 @@ color: #FFFFFF;
     background: hsla(0, 0%, 100%, .2);
     cursor: pointer;
     gap: 5px;
+}
+
+.turnoncategory{
+ display: none;
+}
+.category-hover:hover .turnoncategory{
+    display: block;
+}
+.sadow-global{
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1),
+        0 2px 6px 2px rgba(60, 64, 67, .15) !important;
+}
+.container-input {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container-input input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #FFF;
+    border-radius: 50%;
+    border: 1px solid #978c8d;
+}
+.container-input input:checked~.checkmark {
+    border-radius: 50%;
+    border: 1px solid #FFF;
+    background: 50% / 50% 50% no-repeat;
+    background-color: #D70018;
+   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath fill='%23fff' d='m6.564.75-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3E%3C/svg%3E");
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    border: 1px solid #FFF;
+}
+.container-input input:checked~.checkmark:after {
+    display: block;
+   background-color: aqua;
 }

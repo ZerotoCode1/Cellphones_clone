@@ -1,12 +1,12 @@
 import HomeLayout from "@/Layouts/HomeLayout";
 import React from "react";
 
-const LayoutUser = ({ children }: { children: React.ReactNode }) => {
+const LayoutHome = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <div>
       <HomeLayout>{children}</HomeLayout>
-    </>
+    </div>
   );
 };
 
-export default LayoutUser;
+export default LayoutHome;
