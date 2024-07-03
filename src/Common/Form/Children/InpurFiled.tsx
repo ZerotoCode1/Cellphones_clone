@@ -11,7 +11,6 @@ const InpurFiled = (prop: InpurFiledProps) => {
   const { field, form, label, placeholder } = prop;
   const { name } = field;
   const { handleChange } = form;
-  console.log(form, "fsfd");
   return (
     <div>
       <label htmlFor={label}>{label}</label>
@@ -22,7 +21,7 @@ const InpurFiled = (prop: InpurFiledProps) => {
         style={{
           borderBottom: "1px solid #ccc", // Border-bottom mặc định
           borderRadius: "0", // Xóa bo góc nếu cần
-          padding: "0", // Xóa padding nếu cần
+          padding: "4.5px", // Xóa padding nếu cần
           backgroundImage: "linear-gradient(to left, #007bff, #007bff )", // Gradient màu xanh từ trái sang phải
           backgroundSize: "0% 2px", // Kích thước ban đầu của gradient là 0
           backgroundRepeat: "no-repeat", // Không lặp lại gradient

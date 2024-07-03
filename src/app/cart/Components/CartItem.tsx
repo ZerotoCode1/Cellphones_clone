@@ -33,18 +33,22 @@ const CartItem = (prop: PropCartItem) => {
     }
     caculatePrice();
   };
+  const hanDleteCart = () => {
+    removeCart(id);
+    caculatePrice();
+  };
   return (
     <div
       className="bg-[#FFFFFF] rounded-[8px] h-full p-[10px] w-full mb-5"
       style={{ border: "1px solid rgba(145, 158, 171, .239)" }}
     >
       <div className="flex gap-x-10">
-        <div className="gap-x-2 flex">
+        <div className="gap-x-2 flex gap-[35px]">
           {!noneCheck && (
             <label className="container-input">
               <input type="checkbox" onChange={handleChecked} />
               <span
-                className="checkmark"
+                className="checkmark custom_checkbox relative"
                 style={{ height: "18px", width: "18px" }}
               ></span>
             </label>
@@ -56,7 +60,7 @@ const CartItem = (prop: PropCartItem) => {
             <Link href={"fsfd"} className="hover:underline text-[16px]">
               {titleProduct}
             </Link>
-            <span className="cursor-pointer">
+            <span className="cursor-pointer" onClick={hanDleteCart}>
               <SourceIcon.Delete />
             </span>
           </div>

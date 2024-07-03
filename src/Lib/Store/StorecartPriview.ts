@@ -14,7 +14,7 @@ type Action = {
 
 export const useStoreCartPriview = create<State & Action>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       lisProDuct: [],
       totalPrice: 0,
       setAddCartPriview: (cartitem) =>

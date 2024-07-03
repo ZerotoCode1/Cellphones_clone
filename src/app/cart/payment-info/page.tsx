@@ -7,15 +7,19 @@ import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
 import InforPayment from "./Children/InforPayment";
 import { conVertPrice } from "@/Components/Contant/convertdata";
 import { Form, Formik } from "formik";
+import Payment from "./Children/Payment";
 
 const enum TabsKey {
   Info = "Info",
   Payment = "Payment",
 }
 const PaymentInfo = () => {
+  const toTalPrice = useStoreCartPriview((state) => state.totalPrice);
   const [tab, setTab] = useState(TabsKey.Info);
   useEffect(() => {
-    return () => {};
+    return () => {
+      useStoreCartPriview.persist.rehydrate();
+    };
   }, [tab]);
 
   const onChange = (key: string) => {
@@ -26,7 +30,8 @@ const PaymentInfo = () => {
     <div>
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {(props) => {
-          const { handleChange } = props;
+          const { handleChange, values } = props;
+          console.log(values, "fsfsfsd");
           const items: TabsProps["items"] = [
             {
               key: TabsKey.Info,
@@ -36,10 +41,9 @@ const PaymentInfo = () => {
             {
               key: TabsKey.Payment,
               label: "2. Thanh toan",
-              children: "Pane 2",
+              children: <Payment />,
             },
           ];
-          console.log(props.values, "fsfsfsd");
           return (
             <Form>
               <Tabs
@@ -75,9 +79,9 @@ const PaymentInfo = () => {
                 }}
               >
                 <div className="flex justify-between">
-                  <span className="font-semibold">Tông tien tam tinh:</span>
+                  <span className="font-semibold">Tổng tiền tạm tính:</span>
                   <span className="color-default font-bold">
-                    {conVertPrice(12000000)}
+                    {conVertPrice(toTalPrice)}
                   </span>
                 </div>
                 <button

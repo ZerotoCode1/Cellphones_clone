@@ -16,8 +16,14 @@ import Delete from "./Delete";
 import Gift from "./Gift";
 import Protect from "./Protect";
 import MoveRight from "./MoveRight";
+import CloseFiledValue from "./CloseFiledvalue/CloseFiledValue";
+import DownSelect from "./DownSelect/DownSelect";
+import PayCard from "./Paycard/PayCard";
 
 export const SourceIcon = {
+  PayCard,
+  DownSelect,
+  CloseFiledValue,
   Logo,
   CategoryIcon,
   ArowRight,
