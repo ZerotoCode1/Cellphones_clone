@@ -5,11 +5,13 @@ import CartItem, { PropCartItem } from "./Components/CartItem";
 import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
 import Link from "next/link";
 import { BASE_ROUTER } from "@/Components/Contant/apiUrl";
-
+import { usePathname } from "next/navigation";
 const Cart = () => {
   const toTalPrice = useStoreCartPriview((state) => state.totalPrice);
   const quannity = useStoreCartPriview((state) => state.lisProDuct.length);
   const [loading, setLoading] = useState(true);
+  const Pathname = usePathname();
+
   useEffect(() => {
     if (toTalPrice > 0) {
       document
@@ -20,9 +22,8 @@ const Cart = () => {
         .querySelector(".btn-buy")
         ?.classList.remove("bg-[#c41717]", "text-white");
     }
-    return () => {
-      useStoreCartPriview;
-    };
+
+    return () => {};
   }, [toTalPrice]);
   return (
     <>

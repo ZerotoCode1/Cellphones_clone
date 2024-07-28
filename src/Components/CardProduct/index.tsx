@@ -9,6 +9,10 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SourceIcon } from "../Iconsvg";
 import CardItem from "./Components/CardItem";
+import { useEffect, useState } from "react";
+import ProductServices, {
+  ResponseProduct,
+} from "@/services/Products/Getproduct";
 interface CardProductProps {
   next: string;
   pre: string;
@@ -16,10 +20,24 @@ interface CardProductProps {
   autoplay?: number;
   loop?: boolean;
   backgroundSale?: string;
+  categoryId?: string;
 }
 
 const CardProduct = (prop: CardProductProps) => {
-  const { next, pre, title, autoplay, loop, backgroundSale } = prop;
+  const { next, pre, title, autoplay, loop, backgroundSale, categoryId } = prop;
+  const [data, setData] = useState<ResponseProduct[]>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await ProductServices.getProDuctByCategory({
+          limit: 15,
+          category_id: categoryId ?? "",
+        });
+        setData(res.data.data);
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <div className="px-20 relative">
@@ -55,11 +73,12 @@ const CardProduct = (prop: CardProductProps) => {
             background: `url("${backgroundSale}") 0% 0% / cover no-repeat`,
           }}
         >
-          {mocData.map((item, index) => (
-            <SwiperSlide key={index} className="px-2 max-w-[290px]">
-              <CardItem data={item} />
-            </SwiperSlide>
-          ))}
+          {data &&
+            data.map((item, index) => (
+              <SwiperSlide key={index} className="px-2 max-w-[290px]">
+                <CardItem productItem={item} />
+              </SwiperSlide>
+            ))}
         </Swiper>
         <div
           className={`w-[40px] h-[70px] arrow-left ${pre} arrow flex items-center z-10 justify-center`}

@@ -2,25 +2,12 @@
 import BannerSlide from "@/Components/BannerSlide";
 import CardProduct from "@/Components/CardProduct";
 import ListCategory from "@/Components/Category";
-import { LIST_USER } from "@/Components/Contant/apiUrl";
 import RightHeader from "@/Components/RightHeader";
 import HomeLayout from "@/Layouts/HomeLayout";
-import Services from "@/Lib/Request/Services";
-import { useStore } from "@/Lib/Store/Store";
-import React, { useEffect } from "react";
+import CategoryServices from "@/services/Category/CategoryService";
 import Link from "next/link";
 const HomeRoot = () => {
-  const fakedata = useStore((state) => state.setListUsers);
-  const data = useStore((state) => state.listusers);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await Services.get(LIST_USER);
-      fakedata(data);
-    };
-    fetchData();
-  }, []);
-  console.log(data, "wwwwwwwwwwww");
+  const { listCategory } = CategoryServices();
   return (
     <HomeLayout>
       <div>
@@ -43,7 +30,15 @@ const HomeRoot = () => {
           backgroundSale="https://cdn2.cellphones.com.vn/x/media/wysiwyg/background-fs_1.png"
         />
         <div className="h-6"></div>
-        <CardProduct next="c" pre="d" title="Lap top xịn nhất" />
+        {listCategory?.map((categoryItem, index) => (
+          <CardProduct
+            key={index}
+            next={`c-${index}`}
+            pre={`d-${index}`}
+            title={categoryItem.name}
+            categoryId={categoryItem._id}
+          />
+        ))}
       </div>
     </HomeLayout>
   );

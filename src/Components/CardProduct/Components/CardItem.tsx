@@ -4,12 +4,18 @@ import Image from "next/image";
 import { Rate } from "antd";
 import SaleImg from "../../../../public/Card/sale.png";
 import { SourceIcon } from "@/Components/Iconsvg";
+import { ResponseProduct } from "@/services/Products/Getproduct";
+import { useRouter } from "next/navigation";
 interface CardItemProps {
-  data: any;
+  productItem: ResponseProduct;
 }
 const CardItem = (prop: CardItemProps) => {
-  const { data } = prop;
-  const { img } = data;
+  const { productItem } = prop;
+  const router = useRouter();
+  const handleDetail = () => {
+    console.log("fsfsfsdfsd");
+    router.push(`/Detail/${productItem._id}`);
+  };
   return (
     <>
       <div
@@ -28,25 +34,36 @@ const CardItem = (prop: CardItemProps) => {
         <div className="absolute top-[-1px] right-0 w-[63px] h-[21px] rounded-[5px] px-[5px] py-[2px] border-solid border-[#0c53b7] border-[1px]">
           <p className="text-[9px] font-semibold text-[#0c53b7] ">Trả góp 0%</p>
         </div>
-        <div className="text-center min-h-[170px] mt-[10px]">
-          <Image height={161} width={161} className="m-auto" src={img} alt="" />
-        </div>
-        <div className="h-65px min-h-[65px] max-h-[65px]">
-          <p className="text-[14px] font-semibold ">
-            iPhone 13 128GB | Chính hãng VN/A
+        <div onClick={handleDetail} className="cursor-pointer">
+          <div className="text-center min-h-[170px] mt-[10px]">
+            <Image
+              height={161}
+              width={161}
+              className="m-auto"
+              src={productItem.image}
+              alt=""
+              style={{ minHeight: "161px" }}
+            />
+          </div>
+          <div className="h-65px min-h-[65px] max-h-[65px]">
+            <p className="text-[14px] font-semibold ">
+              {productItem.productName}
+            </p>
+          </div>
+          <p>
+            <span className="text-[16px] text-[#d70018] font-bold">
+              {productItem.price}
+            </span>
+            <span className="text-[14px] text-[#707070] font-semibold line-through ml-2">
+              18900000
+            </span>
           </p>
-        </div>
-        <p>
-          <span className="text-[16px] text-[#d70018] font-bold">13390000</span>
-          <span className="text-[14px] text-[#707070] font-semibold line-through ml-2">
-            18900000
-          </span>
-        </p>
-        <div className="h-[48px] bg-[#f3f4f6] w-full rounded-[5px] overflow-hidden p-[5px]">
-          <p className="text-[12px]">
-            Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6
-            tháng
-          </p>
+          <div className="h-[48px] bg-[#f3f4f6] w-full rounded-[5px] overflow-hidden p-[5px]">
+            <p className="text-[12px]">
+              Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6
+              tháng
+            </p>
+          </div>
         </div>
         <div className="flex justify-between absolute bottom-[10px]">
           <Rate

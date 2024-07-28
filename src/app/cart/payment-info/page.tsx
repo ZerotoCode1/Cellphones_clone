@@ -1,21 +1,22 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
-import { Tabs } from "antd";
-import type { TabsProps } from "antd";
-import CartItem from "../Components/CartItem";
-import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
-import InforPayment from "./Children/InforPayment";
 import { conVertPrice } from "@/Components/Contant/convertdata";
+import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
+import type { TabsProps } from "antd";
+import { Tabs } from "antd";
 import { Form, Formik } from "formik";
+import { useEffect, useState } from "react";
+import InforPayment from "./Children/InforPayment";
 import Payment from "./Children/Payment";
-
+import { useRouter, useSearchParams } from "next/navigation";
 const enum TabsKey {
   Info = "Info",
   Payment = "Payment",
 }
 const PaymentInfo = () => {
   const toTalPrice = useStoreCartPriview((state) => state.totalPrice);
-  const [tab, setTab] = useState(TabsKey.Info);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [tab, setTab] = useState(searchParams.get("tab"));
   useEffect(() => {
     return () => {
       useStoreCartPriview.persist.rehydrate();
@@ -23,15 +24,15 @@ const PaymentInfo = () => {
   }, [tab]);
 
   const onChange = (key: string) => {
+    router.push(`${`/cart/payment-info`}?tab=${key}`);
     setTab(key as TabsKey);
   };
   const onSubmit = (values: any) => {};
   return (
-    <div>
+    <div className="payment-tab">
       <Formik initialValues={{}} onSubmit={onSubmit}>
         {(props) => {
           const { handleChange, values } = props;
-          console.log(values, "fsfsfsd");
           const items: TabsProps["items"] = [
             {
               key: TabsKey.Info,
@@ -47,7 +48,7 @@ const PaymentInfo = () => {
           return (
             <Form>
               <Tabs
-                defaultActiveKey={TabsKey.Info}
+                activeKey={tab ?? TabsKey.Info}
                 items={items.map((item) => ({
                   ...item,
                   label: (

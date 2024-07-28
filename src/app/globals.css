@@ -220,7 +220,13 @@ input[type="radio"]:checked {
   border-bottom: 1px solid #e5e5e5;
   width: 100% !important;
 }
-
+.payment-tab  .ant-tabs-ink-bar{
+    height: 4px !important;
+    background-color: #d70018 !important;
+}
+.customTabInfor .ant-tabs-ink-bar {
+    background-color: #FFFFFF !important;
+}
 .component-box{
  background-color: #FFFFFF;
  border-radius: 10px;
@@ -230,3 +236,70 @@ border: 1px solid rgba(145, 158, 171, .239);
 .scale-box:active{
     transform: scale(.98);
 }
+.modal-common .ant-modal-content{
+   padding: 0 !important;
+   max-height: 80vh !important;
+}
+.ant-modal-title{
+    font-weight: 700 !important;
+    padding: 20px 20px 0 20px !important;
+}
+.ant-modal-content {
+    border-radius: 15px !important;
+}
+.ant-modal-header{
+    border-radius: 15px !important;
+    background-color: #fafafa !important;
+    align-items: center !important;
+    padding: 0 20px 20px 20px !important;
+}
+.custom-input:focus{
+border: none;
+    /* Remove border on focus */
+    outline: none;
+    /* Remove outline on focus */
+    box-shadow: none;
+    /* Remove box-shadow on focus */
+}
+.border-version{
+    border: 1px solid #d1d5db
+}
+.active-version{
+    border: 1px solid #d70018;
+}
+.active-version::after{
+    background-color: #d70018;
+    border-radius: 0 0 10px 0;
+    color: #fff;
+    content: "✓";
+    font-size: 10px;
+    height: 13px;
+    left: 0;
+    padding-bottom: 15px;
+    padding-left: 4px;
+    position: absolute;
+    top: 0;
+    width: 18px;
+    border-top-left-radius: 8px;
+}
+.box-item{
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.bg-ratting{
+    background-color: #D70018;
+    color: #fff;
+}
+.box-slide-view{
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 4px;
+    text-align: center;
+    height: 60px;
+    width: 60px;
+}
+.box-slide-view-active{
+    border: 1px solid #D70018;
+}
+

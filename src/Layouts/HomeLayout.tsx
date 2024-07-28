@@ -8,7 +8,9 @@ const HomeLayout = (prop: BaseLayoutProps) => {
   return (
     <>
       <Header />
-      {children}
+      <div className="text-center flex  justify-center ">
+        <div style={{ maxWidth: "1500px" }}>{children}</div>
+      </div>
     </>
   );
 };

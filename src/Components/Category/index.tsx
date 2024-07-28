@@ -1,9 +1,8 @@
-import { title } from "process";
-import React from "react";
+import { useCategoryStore } from "@/Lib/Store/Category/CategoryStore";
 import { SourceIcon } from "../Iconsvg";
 import CardSeo from "./components/CardSeo";
-
 const ListCategory = () => {
+  const listCategory = useCategoryStore((state) => state.listCategory);
   return (
     <div
       className="h-[370px] relative max-w-[219px] min-w-[219px] rounded-[15px] z-10 "
@@ -12,7 +11,7 @@ const ListCategory = () => {
           "0 1px 2px 0 rgba(60,64,67,.1),0 2px 6px 2px rgba(60,64,67,.15)",
       }}
     >
-      {mocData.map((categoryItem, index) => (
+      {listCategory?.map((categoryItem, index) => (
         <div
           key={index}
           className=" category-hover flex items-center gap-x-2 p-[6px] justify-between cursor-pointer hover:bg-gray-100 hover:text-[#e91e18]"
@@ -29,14 +28,14 @@ const ListCategory = () => {
           <div className="flex">
             <i
               style={{
-                backgroundImage: `url(${categoryItem?.icon})`,
+                backgroundImage: `url(${categoryItem?.image})`,
                 width: "25px",
                 height: "25px",
                 marginRight: "5px",
               }}
             />
-            <span className="text-[14px] font-semibold text-[#343a40] hover:text-[#e91e18]">
-              {categoryItem?.titleCategory}
+            <span className="text-[12px] font-semibold text-[#343a40] hover:text-[#e91e18]">
+              {categoryItem?.name}
             </span>
           </div>
           <SourceIcon.ArowCategory />

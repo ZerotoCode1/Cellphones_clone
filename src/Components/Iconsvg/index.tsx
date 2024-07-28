@@ -19,8 +19,12 @@ import MoveRight from "./MoveRight";
 import CloseFiledValue from "./CloseFiledvalue/CloseFiledValue";
 import DownSelect from "./DownSelect/DownSelect";
 import PayCard from "./Paycard/PayCard";
+import IconCheck from "./Children/IconCheck";
+import Star from "./Star";
+import SendQuestion from "./Send";
 
 export const SourceIcon = {
+  IconCheck,
   PayCard,
   DownSelect,
   CloseFiledValue,
@@ -41,4 +45,6 @@ export const SourceIcon = {
   Gift,
   Protect,
   MoveRight,
+  Star,
+  SendQuestion,
 };
