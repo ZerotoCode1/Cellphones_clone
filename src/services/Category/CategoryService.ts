@@ -20,7 +20,9 @@ const CategoryServices = () => {
 
   const getProDuctByCategory = async () => {
     try {
-      const res = await servicesInstance.get(rootRequest.LISTCATEGORY);
+      const res = (await servicesInstance.get(
+        rootRequest.LISTCATEGORY
+      )) as Response;
       setCategory(res.data.data);
     } catch (error) {
       console.error("Failed to fetch products by category:", error);
