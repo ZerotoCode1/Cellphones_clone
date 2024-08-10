@@ -22,7 +22,7 @@ const TotalStaticRate = (props: Props) => {
       const res = await ProductServices.getRateStaticPeoduct({
         productId: productId,
       });
-      if (res.data) {
+      if (res && res.data) {
         setRattings(res.data);
       }
     };
