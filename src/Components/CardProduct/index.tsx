@@ -33,7 +33,7 @@ const CardProduct = (prop: CardProductProps) => {
           limit: 15,
           category_id: categoryId ?? "",
         });
-        setData(res.data.data);
+        setData(res?.data?.data);
       } catch (error) {}
     };
     if (categoryId) {
