@@ -8,4 +8,5 @@ export const rootRequest = {
   STATICSRATE: "/rattingStatics",
   PROFILE: "/userId",
   REFECTH_TOKEN: "/refreshToken",
+  RESGISTER: "/create",
 };

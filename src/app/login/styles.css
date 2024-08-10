@@ -48,49 +48,22 @@
   text-align: center;
   width: 100%;
 }
-.box-input__line {
-  background-color: #d30015;
-  bottom: 0;
-  height: 1px;
-  left: 0;
-  position: absolute;
-  transition: 0.3s ease;
-  width: 0;
+.login-question {
+  margin: 20px 0;
 }
-.custom-input:focus + .box-input__line {
-  width: 100%;
+.is-flex {
+  display: flex !important;
 }
-.custom-label {
-  color: #919eab;
-  font-size: 15px;
-  left: 0;
-  line-height: 24px;
-  margin: 0;
-  opacity: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  top: 18px;
-  transition: top 0.25s ease;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  white-space: nowrap;
-  width: 100%;
+.is-justify-content-center {
+  justify-content: center !important;
 }
-.box-input-form {
-  border-radius: 0;
-  height: 50px;
-  position: relative;
-  width: 100%;
+.login-question .link {
+  color: #d70018;
+  font-size: 14px;
+  font-weight: 600;
 }
-.custom-input:focus + .box-input__line + .custom-label {
-  color: #d30015;
-  font-size: 11px;
-  line-height: 18px;
-  opacity: 1;
-  top: 0 !important;
-}
-.custom-input:focus::placeholder {
-  opacity: 0;
+.button__go-login {
+  color: #485fc7;
+  font-size: 14px;
+  font-weight: 600;
 }

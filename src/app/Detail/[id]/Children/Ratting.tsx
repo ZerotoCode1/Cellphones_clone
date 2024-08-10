@@ -14,7 +14,6 @@ interface Props {
 const Ratting = (props: Props) => {
   const { productId, numberRate } = props;
   const [rate, setRate] = useState<any>([]);
-  console.log(numberRate.hasImage, "fsdfsdfd");
   useEffect(() => {
     const fetchData = async () => {
       const body = {
@@ -24,7 +23,9 @@ const Ratting = (props: Props) => {
       };
       try {
         const res = await ProductServices.getRateProduct(body);
-        setRate(res.data);
+        if (res && res?.data) {
+          setRate(res?.data);
+        }
       } catch (err) {}
     };
     fetchData();
@@ -34,8 +35,8 @@ const Ratting = (props: Props) => {
     <div className="">
       {rate.map((item: any, index: number) => (
         <>
-          <User userId={item?.user} createdAt={item?.createdAt} />
-          <div className="ml-[65px]">
+          <User userId={item?.user} createdAt={item?.createdAt} key={index} />
+          <div className="ml-[65px]" key={index}>
             <div className="flex gap-4 mb-2">
               <Rate
                 disabled

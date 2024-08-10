@@ -1,0 +1,75 @@
+.box-input-form {
+  border-radius: 0;
+  height: 50px;
+  position: relative;
+  width: 100%;
+}
+.custom-input {
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(145, 158, 171, 0.2) !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  font-size: 16px !important;
+  height: 100% !important;
+  line-height: 24px !important;
+  padding: 18px 20px 2px 0 !important;
+  width: 100% !important;
+}
+.custom-input:focus + .box-input__line {
+  width: 100%;
+}
+.custom-input:focus + .box-input__line + .custom-label {
+  color: #d30015;
+  font-size: 11px;
+  line-height: 18px;
+  opacity: 1;
+  top: 0 !important;
+}
+.custom-input:focus::placeholder {
+  opacity: 0;
+}
+.box-input__line {
+  background-color: #d30015;
+  bottom: 0;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transition: 0.3s ease;
+  width: 0;
+}
+.custom-input:focus + .box-input__line {
+  width: 100%;
+}
+.custom-input:focus + .box-input__line + .custom-label {
+  color: #d30015;
+  font-size: 11px;
+  line-height: 18px;
+  opacity: 1;
+  top: 0 !important;
+}
+.custom-label {
+  color: #919eab;
+  font-size: 15px;
+  left: 0;
+  line-height: 24px;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 18px;
+  transition: top 0.25s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  width: 100%;
+}
+.custom-input:focus + .box-input__line + .custom-label {
+  color: #d30015;
+  font-size: 11px;
+  line-height: 18px;
+  opacity: 1;
+  top: 0 !important;
+}

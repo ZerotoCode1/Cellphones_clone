@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import { Button, Form, Input } from "antd";
-import type { FormProps } from "antd";
+import { formAntd } from "@/Common/FormAntd";
 import AuthServices, { RequestLogin } from "@/services/Auth/AuthService";
+import type { FormProps } from "antd";
+import { Form } from "antd";
+import Image from "next/image";
 import { toast } from "react-toastify";
 import LogoLogin from "./assets/logologin.png";
 import "./styles.css";
@@ -40,23 +40,25 @@ const Login = () => {
         <h1>Đăng nhập với</h1>
       </div>
       <Form onFinish={onFinish}>
-        <Form.Item name="mail">
-          <div className="box-input-form">
-            <Input className="custom-input" placeholder="Tài khoản" />
-            <div className="box-input__line"></div>
-            <label className="custom-label">Tài khoản</label>
-          </div>
-        </Form.Item>
-        <Form.Item name="password">
-          <div className="box-input-form">
-            <Input className="custom-input" placeholder="Mật khẩu" />
-            <div className="box-input__line"></div>
-            <label className="custom-label">Mật khẩu</label>
-          </div>
-        </Form.Item>
+        <formAntd.InputAntd
+          label="Tài khoản"
+          plaholder="Tài khoản"
+          name="mail"
+        />
+        <formAntd.InputAntd
+          label="Mật khẩu"
+          plaholder="Mật khẩu"
+          name="password"
+        />
         <button className="btn-form__submit is-fullwidth button__login">
           Đăng nhập
         </button>
+        <div className="login-question is-flex is-justify-content-center">
+          <p className="login-question__text">Bạn chưa có tài khoản?</p>
+          <a href="/register" className="link button__go-register">
+            Đăng ký ngay
+          </a>
+        </div>
       </Form>
     </div>
   );

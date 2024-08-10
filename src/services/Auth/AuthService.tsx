@@ -38,6 +38,12 @@ export type Response = AxiosResponse<{
 interface RequestRefreshToken {
   mail: string;
 }
+interface RequestRegister {
+  mail: string;
+  password: string;
+  phone: string;
+  name: string;
+}
 class AuthServices {
   login(body: RequestLogin): Promise<any> {
     return servicesInstance.post(rootRequest.LOGIN, body);
@@ -52,6 +58,9 @@ class AuthServices {
       token: localStorage.getItem("refreshToken"),
       ...body,
     });
+  }
+  register(body: RequestRegister): Promise<any> {
+    return servicesInstance.post(rootRequest.RESGISTER, body);
   }
 }
 
