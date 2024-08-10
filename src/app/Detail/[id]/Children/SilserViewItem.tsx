@@ -1,3 +1,4 @@
+// "use client";
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,11 +10,12 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import Image from "next/image";
+import { SourceIcon } from "@/Components/Iconsvg";
 interface SilserViewItemProps {
   image: string[];
   versionColor: [{ name: string; image: string }];
   activerColorVersion: number;
-  vdeo: string;
+  vdeo?: string;
 }
 const SilserViewItem = (props: SilserViewItemProps) => {
   const { image, versionColor, activerColorVersion, vdeo } = props;
@@ -27,9 +29,9 @@ const SilserViewItem = (props: SilserViewItemProps) => {
     }
   }, [activeImage]);
   useEffect(() => {
-    setActiveImage(image.length + activerColorVersion);
-  }, [activerColorVersion]);
-  console.log(activeImage, "fsfdsfds");
+    const indexActive = vdeo ? 1 : 0;
+    setActiveImage(image.length + activerColorVersion + indexActive);
+  }, [activerColorVersion, image.length, vdeo]);
   return (
     <div>
       <Swiper
@@ -40,11 +42,38 @@ const SilserViewItem = (props: SilserViewItemProps) => {
           marginLeft: "0px",
         }}
         spaceBetween={10}
-        navigation={true}
+        navigation={{
+          prevEl: ".prev",
+          nextEl: ".next",
+        }}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2 max-h-[398px] w-[780px] flex justify-start ml-0"
+        className="mySwiper2 max-h-[398px] w-[780px] flex justify-start ml-0 relative"
       >
+        <div
+          className="swiper-next absolute left-0 top-[45%] h-[60px] w-[30px] flex items-center justify-center prev z-10"
+          style={{
+            borderRadius: "0 100px 100px 0",
+            backgroundColor: "rgba(0,0,0,.3)",
+            boxShadow: "0 0 4px 0 rgba(0,0,0,.2)",
+          }}
+        >
+          <button>
+            <SourceIcon.ArowLeft fill={"#fff"} width={14} height={18} />
+          </button>
+        </div>
+        <div
+          className="swiper-prve absolute right-0 top-[45%] h-[60px] w-[30px] flex items-center justify-center next z-10"
+          style={{
+            borderRadius: "100px 0 0 100px",
+            backgroundColor: "rgba(0,0,0,.3)",
+            boxShadow: "0 0 4px 0 rgba(0,0,0,.2)",
+          }}
+        >
+          <button className="">
+            <SourceIcon.ArowRight fill={"#fff"} width={14} height={18} />
+          </button>
+        </div>
         {vdeo && (
           <SwiperSlide className="w-full h-full">
             <iframe

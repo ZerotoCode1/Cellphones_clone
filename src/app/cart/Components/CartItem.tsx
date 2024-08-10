@@ -45,10 +45,10 @@ const CartItem = (prop: PropCartItem) => {
       <div className="flex gap-x-10">
         <div className="gap-x-2 flex gap-[35px]">
           {!noneCheck && (
-            <label className="container-input">
+            <label className="container-input-custom">
               <input type="checkbox" onChange={handleChecked} />
               <span
-                className="checkmark custom_checkbox relative"
+                className="checkmark-custom custom_checkbox relative"
                 style={{ height: "18px", width: "18px" }}
               ></span>
             </label>

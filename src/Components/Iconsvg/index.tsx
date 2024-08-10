@@ -22,6 +22,7 @@ import PayCard from "./Paycard/PayCard";
 import IconCheck from "./Children/IconCheck";
 import Star from "./Star";
 import SendQuestion from "./Send";
+import UploadImage from "./UploadImage";
 
 export const SourceIcon = {
   IconCheck,
@@ -47,4 +48,5 @@ export const SourceIcon = {
   MoveRight,
   Star,
   SendQuestion,
+  UploadImage,
 };

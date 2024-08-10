@@ -30,6 +30,10 @@ export default function RootLayout({
         {children}
         <ToastContainer />
       </body>
+      <div id="page_loader">
+        <div className="logo"></div>
+        <div className="loader"></div>
+      </div>
     </html>
   );
 }

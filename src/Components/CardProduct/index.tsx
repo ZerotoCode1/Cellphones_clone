@@ -36,8 +36,10 @@ const CardProduct = (prop: CardProductProps) => {
         setData(res.data.data);
       } catch (error) {}
     };
-    fetchData();
-  }, []);
+    if (categoryId) {
+      fetchData();
+    }
+  }, [categoryId]);
   return (
     <>
       <div className="px-20 relative">
@@ -112,48 +114,7 @@ const CardProduct = (prop: CardProductProps) => {
 };
 
 export default CardProduct;
-const mocData = [
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_1__1_120.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-pro-max_3.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/d/i/dien-thoai-oppo-reno-11-f-2.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_d_i_1__1_3.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-e-dra-egm22f75p-22-inch.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-xiaomi-a27i-ela5345eu-27-inch.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-air-6-m2-11-inch_9_.jpg",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-philips-24m1n3200za-24-inch-thumbnail.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_172_2.png",
-    id: "",
-  },
-  {
-    img: "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/h/u/huawei_1__1_2.png",
-    id: "",
-  },
-];
+
 const seoData = [
   {
     title: "Asus",

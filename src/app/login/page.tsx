@@ -5,13 +5,20 @@ import { Button, Form, Input } from "antd";
 import type { FormProps } from "antd";
 import AuthServices, { RequestLogin } from "@/services/Auth/AuthService";
 import { toast } from "react-toastify";
-
+import LogoLogin from "./assets/logologin.png";
+import "./styles.css";
 const Login = () => {
   const onFinish: FormProps<RequestLogin>["onFinish"] = async (values) => {
     try {
       const res = await AuthServices.login(values);
       if (res) {
         toast.success("Đăng nhập thành công");
+        if (res.data) {
+          localStorage.setItem("token", res.data.accessToken);
+          localStorage.setItem("refreshToken", res.data.refreshToken);
+          localStorage.setItem("mail", values.mail);
+        }
+        console.log(res.data, "fsfdsfd");
       } else {
         toast.error("Đăng nhập thất bại");
       }
@@ -27,75 +34,29 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center flex-col items-center">
-      <Image
-        src="https://account.cellphones.com.vn/_nuxt/img/Shipper_CPS3.77d4065.png"
-        alt="account"
-        height={100}
-        width={100}
-      />
-      <p>Đăng nhập với</p>
-      <div className="flex gap-8">
-        <div className="flex gap-3">
-          <Image
-            src={
-              "https://account.cellphones.com.vn/_nuxt/img/image45.93ceca6.png"
-            }
-            height={24}
-            width={24}
-            alt="Google"
-          />
-          <p>Google</p>
-        </div>
-        <div className="flex gap-3">
-          <Image
-            src={
-              "https://account.cellphones.com.vn/_nuxt/img/Logo-Zalo-Arc.a36365b.png"
-            }
-            height={24}
-            width={24}
-            alt="Zalo"
-          />
-          <p>Zalo</p>
-        </div>
+    <div id="login-form" className="cps-container">
+      <div className="cps-login__image">
+        <Image src={LogoLogin} height={100} width={100} alt="" />
+        <h1>Đăng nhập với</h1>
       </div>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item<RequestLogin>
-          name="mail"
-          rules={[{ required: true, message: "Please input your username!" }]}
-        >
-          <Input
-            className="custom-input"
-            style={{
-              border: "none",
-              borderBottom: "1px solid #ccc",
-              backgroundColor: "transparent",
-              borderRadius: 0,
-            }}
-          />
+      <Form onFinish={onFinish}>
+        <Form.Item name="mail">
+          <div className="box-input-form">
+            <Input className="custom-input" placeholder="Tài khoản" />
+            <div className="box-input__line"></div>
+            <label className="custom-label">Tài khoản</label>
+          </div>
         </Form.Item>
-
-        <Form.Item<RequestLogin>
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
+        <Form.Item name="password">
+          <div className="box-input-form">
+            <Input className="custom-input" placeholder="Mật khẩu" />
+            <div className="box-input__line"></div>
+            <label className="custom-label">Mật khẩu</label>
+          </div>
         </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+        <button className="btn-form__submit is-fullwidth button__login">
+          Đăng nhập
+        </button>
       </Form>
     </div>
   );

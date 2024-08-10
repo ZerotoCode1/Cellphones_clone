@@ -40,6 +40,20 @@ export interface RequestGetProductByCategory {
 export interface RequestGetProductById {
   _id: string;
 }
+export interface RequestRateProduct {
+  productId: string;
+  rating: number;
+  comment: string;
+  image?: string;
+}
+interface RateStatics {
+  productId: string;
+}
+interface GetRate {
+  productId: string;
+  numberRate?: number;
+  image?: any;
+}
 class ProductServices {
   getProDuctByCategory(body: RequestGetProductByCategory): Promise<Response> {
     return servicesInstance.get(
@@ -51,6 +65,19 @@ class ProductServices {
   ): Promise<AxiosResponse<ResponseProductById>> {
     return servicesInstance.get(
       `${rootRequest.PRODUCTBYID}?${querystring.stringify(body)}`
+    );
+  }
+  rateProduct(body: FormData) {
+    return servicesInstance.post(rootRequest.RATEPRODUCT, body);
+  }
+  getRateProduct(body: GetRate) {
+    return servicesInstance.get(
+      `${rootRequest.RATEPRODUCTID}?${querystring.stringify(body)}`
+    );
+  }
+  getRateStaticPeoduct(body: RateStatics) {
+    return servicesInstance.get(
+      `${rootRequest.STATICSRATE}?${querystring.stringify(body)}`
     );
   }
 }

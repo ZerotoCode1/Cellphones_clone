@@ -13,9 +13,9 @@ const CardItem = (prop: CardItemProps) => {
   const { productItem } = prop;
   const router = useRouter();
   const handleDetail = () => {
-    console.log("fsfsfsdfsd");
     router.push(`/Detail/${productItem._id}`);
   };
+  const image = productItem?.image[0].split(",")[0];
   return (
     <>
       <div
@@ -40,7 +40,7 @@ const CardItem = (prop: CardItemProps) => {
               height={161}
               width={161}
               className="m-auto"
-              src={productItem.image}
+              src={image}
               alt=""
               style={{ minHeight: "161px" }}
             />

@@ -10,6 +10,14 @@ import { Progress, Rate } from "antd";
 import { SourceIcon } from "@/Components/Iconsvg";
 import Ratting from "./Children/Ratting";
 import QandA from "./Children/QandA";
+import { calc } from "antd/es/theme/internal";
+import { conVertPrice } from "@/Components/Contant/convertdata";
+import { useRouter } from "next/navigation";
+import { popUp } from "@/Common/PopUp";
+import RattingModal from "./Children/Modal/RattingModal";
+import SaticsRate from "./Children/SaticsRate";
+import TotalStaticRate from "./Children/TotalStaticRate";
+
 interface PropDetailProdcut {
   params: { id: string };
 }
@@ -19,11 +27,16 @@ const DetailProduct = (prop: PropDetailProdcut) => {
   const [more, setShowmore] = useState<boolean>(false);
   const [version, setVersion] = useState<number>(0);
   const [colorVersion, setColorVersion] = useState<number>(0);
-  const [star, setStar] = useState<number>();
+  const [star, setStar] = useState<{ star: any; hasImage: boolean }>({
+    star: undefined,
+    hasImage: false,
+  });
+  const [showModalRatting, setShowRatting] = useState<boolean>(false);
+  const router = useRouter();
   const [filterRatting, setFilterRatting] = useState<{
-    all: boolean;
-    withImage: boolean;
-    purchased: boolean;
+    all?: boolean;
+    withImage?: boolean;
+    purchased?: boolean;
   }>({
     all: true,
     withImage: false,
@@ -40,7 +53,7 @@ const DetailProduct = (prop: PropDetailProdcut) => {
       } catch (error) {}
     };
     fetchData();
-  }, []);
+  }, [id]);
   const handleShowmore = () => {
     setShowmore(!more);
   };
@@ -50,7 +63,6 @@ const DetailProduct = (prop: PropDetailProdcut) => {
     });
     return url?.image ?? "";
   };
-  console.log(filterRatting, "fsfdsfsd");
   const handleFilterRatting = (type: "all" | "withImage" | "purchased") => {
     if (type !== "all") {
       setFilterRatting({
@@ -58,7 +70,9 @@ const DetailProduct = (prop: PropDetailProdcut) => {
         all: false,
         [type]: !filterRatting[type],
       });
+      setStar((pre) => ({ ...pre, hasImage: true }));
     } else {
+      setStar((pre) => ({ star: undefined, hasImage: false }));
       setFilterRatting({
         all: true,
         withImage: false,
@@ -68,8 +82,10 @@ const DetailProduct = (prop: PropDetailProdcut) => {
   };
 
   const handleChooseRatting = (index: number) => {
-    setStar(index);
+    setStar((pre) => ({ star: index, hasImage: pre?.hasImage ?? false }));
+    setFilterRatting((pre) => ({ ...pre, all: false }));
   };
+  console.log(filterRatting, "fsfds");
   return (
     <div>
       <div className="h-[30px] sadow-global w-full">
@@ -79,7 +95,17 @@ const DetailProduct = (prop: PropDetailProdcut) => {
           <li>Iphone 15 series</li>
         </ul>
       </div>
-      <div className="w-full grid grid-cols-10 gap-6 mt-5">
+      <div className="flex gap-2 items-center mt-4">
+        <p className="text-left font-bold text-[18px]">{data?.productName}</p>
+        <Rate disabled defaultValue={5} style={{ fontSize: "16px" }} />
+        <p>6 đánh giá</p>
+      </div>
+      <div
+        className="w-full grid grid-cols-10 gap-6 mt-3 pt-4"
+        style={{
+          borderTop: "1px solid #ddd",
+        }}
+      >
         <div className="col-span-6">
           <SilserViewItem
             image={data?.image ?? []}
@@ -145,6 +171,42 @@ const DetailProduct = (prop: PropDetailProdcut) => {
               )
             )}
           </div>
+          <div className="price-buy">
+            <div className="flex justify-center items-center">
+              <Image
+                src="https://cdn2.cellphones.com.vn/x35,webp/media/icon/pdp-trade-icon.png"
+                alt=""
+                height={35}
+                width={32}
+              />
+              <div>
+                <p className="text-left">6690000đ</p>
+                <p>khi thu cũ lên đời</p>
+              </div>
+            </div>
+            <div className="show-price">
+              <p className="text-[#fd2424] font-semibold">6690000đ</p>
+              <p className="line-through">{conVertPrice(6690000)}</p>
+            </div>
+          </div>
+          <div
+            className="text-left flex w-full justify-between mt-5"
+            style={{ width: "calc(100% - 80px)" }}
+          >
+            <button className="btn-buy" onClick={() => router.push("/cart")}>
+              <p>Mua ngay</p>
+              <span>(Giao nhanh 2 giờ hoặc nhận tại cửa hàng)</span>
+            </button>
+            <div className="img-cart">
+              <Image
+                src="https://cdn2.cellphones.com.vn/insecure/rs:fill:50:0/q:70/plain/https://cellphones.com.vn/media/wysiwyg/add-to-cart.png"
+                alt=""
+                height={30}
+                width={25}
+                className="m-auto"
+              />
+            </div>
+          </div>
         </div>
       </div>
       {data && (
@@ -197,7 +259,7 @@ const DetailProduct = (prop: PropDetailProdcut) => {
               <p className="text-left font-semibold">
                 Đánh giá & nhận xét {data.productName}
               </p>
-              <div
+              {/* <div
                 className="grid grid-cols-10 py-5 min-h-[180px]"
                 style={{ borderBottom: "1px solid #ccc" }}
               >
@@ -214,31 +276,19 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                   <p>188 đánh giá</p>
                 </div>
                 <div className="col-span-7 px-12 gap-y-2 flex flex-col">
-                  {rattings.map((item, index) => (
-                    <>
-                      <div className="flex items-center space-x-2">
-                        <p className="flex gap-1">
-                          {item.name} <SourceIcon.Star />
-                        </p>
-                        <div className="flex-1">
-                          <Progress
-                            percent={(item.number / item.toTalRate) * 100}
-                            showInfo={false}
-                            strokeColor={"#D70018"}
-                          />
-                        </div>
-                        <p>{item.number} đánh giá </p>
-                      </div>
-                    </>
-                  ))}
+                  <SaticsRate productId={id} />
                 </div>
-              </div>
+              </div> */}
+              <TotalStaticRate productId={id} />
               <div
                 className="min-h-[120px] flex flex-col justify-center items-center gap-3"
                 style={{ borderBottom: "1px solid #ccc" }}
               >
                 <p>Bạn đánh giá sao về sản phẩm này? </p>
-                <button className="bg-[#D7000E] w-[163px] h-10 text-[#fff] rounded-[8px]">
+                <button
+                  className="bg-[#D7000E] w-[163px] h-10 text-[#fff] rounded-[8px]"
+                  onClick={() => setShowRatting(true)}
+                >
                   Đánh giá ngay
                 </button>
               </div>
@@ -274,13 +324,14 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                   </button>
                 </div>
                 <div className="flex gap-2 mt-3">
-                  {[5, 4, 3, 2, 1].map((item, index) => (
+                  {[5, 4, 3, 2, 1].map((item) => (
                     <>
                       <button
-                        onClick={() => handleChooseRatting(index)}
+                        key={item}
+                        onClick={() => handleChooseRatting(item)}
                         style={{ border: "1px solid #ccc" }}
                         className={`rounded-[15px] px-6 py-[3px] flex justify-center items-center gap-1  ${
-                          star === index ? "bg-ratting" : ""
+                          star?.star === item ? "bg-ratting" : ""
                         }`}
                       >
                         {item} <SourceIcon.Star />
@@ -289,9 +340,7 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                   ))}
                 </div>
                 <div className="mt-5">
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => (
-                    <Ratting key={index} />
-                  ))}
+                  {<Ratting productId={id} numberRate={star ?? ""} />}
                 </div>
               </div>
             </div>
@@ -311,6 +360,18 @@ const DetailProduct = (prop: PropDetailProdcut) => {
           </div>
         </div>
       )}
+      {popUp.ModalCommon({
+        className: "modal-common",
+        title: "Đánh giá & nhận xét",
+        children: (
+          <RattingModal productId={id} nameProduct={data?.productName ?? ""} />
+        ),
+        open: showModalRatting,
+        width: 600,
+        onCancel() {
+          setShowRatting(false);
+        },
+      })}
     </div>
   );
 };

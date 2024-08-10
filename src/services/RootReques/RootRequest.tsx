@@ -1,6 +1,11 @@
 export const rootRequest = {
   LOGIN: "/login",
+  LISTCATEGORY: "/category",
   LISTPRODUCTBYCATEGORY: "/product",
   PRODUCTBYID: "/productId",
-  LISTCATEGORY: "/category",
+  RATEPRODUCT: "/ratting",
+  RATEPRODUCTID: "/rattingFilter",
+  STATICSRATE: "/rattingStatics",
+  PROFILE: "/userId",
+  REFECTH_TOKEN: "/refreshToken",
 };
