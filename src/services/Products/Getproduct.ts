@@ -55,14 +55,16 @@ interface GetRate {
   image?: any;
 }
 class ProductServices {
-  getProDuctByCategory(body: RequestGetProductByCategory): Promise<Response> {
+  getProDuctByCategory(
+    body: RequestGetProductByCategory
+  ): Promise<Response | undefined> {
     return servicesInstance.get(
       `${rootRequest.LISTPRODUCTBYCATEGORY}?${querystring.stringify(body)}`
     );
   }
   getProDuctById(
     body: RequestGetProductById
-  ): Promise<AxiosResponse<ResponseProductById>> {
+  ): Promise<AxiosResponse<ResponseProductById, any> | undefined> {
     return servicesInstance.get(
       `${rootRequest.PRODUCTBYID}?${querystring.stringify(body)}`
     );
