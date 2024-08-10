@@ -49,7 +49,9 @@ const DetailProduct = (prop: PropDetailProdcut) => {
         const res = await ProductServices.getProDuctById({
           _id: id,
         });
-        setData(res.data);
+        if (res) {
+          setData(res.data);
+        }
       } catch (error) {}
     };
     fetchData();
