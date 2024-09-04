@@ -1,6 +1,7 @@
 "use client";
 import { SourceIcon } from "@/Components/Iconsvg";
 import Image from "next/image";
+import path from "path";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -81,31 +82,37 @@ const mocdata = [
     name: "Thanh toán tại cửa hàng",
     image:
       "https://cdn2.cellphones.com.vn/x400,webp,q100/media/payment-logo/COS.png",
+    path: "momopayment",
   },
   {
     id: 2,
     name: "VnPay",
     image: "https://cdn2.cellphones.com.vn/x/media/logo/gw2/vnpay.png",
+    path: "vnpaypayment",
   },
   {
     id: 3,
     name: "Thanh toán qua ví điện Momo",
     image: "https://cdn2.cellphones.com.vn/x/media/logo/gw2/momo_vi.png",
+    path: "momopayment",
   },
   {
     id: 4,
-    name: "ZaloPay",
+    name: "Thanh toán qua ZaloPay",
     image: "https://cdn2.cellphones.com.vn/x/media/logo/gw2/zalopay.png",
+    path: "zalopayment",
   },
   {
     id: 5,
     name: "ShopeePay",
     image: "https://cdn2.cellphones.com.vn/x/media/logo/gw2/shopeepay.png",
+    path: "momopayment",
   },
   {
     id: 6,
     name: "Chuyển khoản qua mã ngân hàng",
     image:
       "https://cdn2.cellphones.com.vn/x400,webp,q100/media/wysiwyg/QRCode.png",
+    path: "momopayment",
   },
 ];

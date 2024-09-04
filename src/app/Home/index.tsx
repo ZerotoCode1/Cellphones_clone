@@ -11,9 +11,6 @@ const HomeRoot = () => {
   return (
     <HomeLayout>
       <div>
-        <Link href={"/Detail/2"}>
-          <button>navigate</button>
-        </Link>
         <div className="flex justify-center gap-4 py-[5px] px-[10px] h-[380px] mb-4">
           <ListCategory />
           <section>

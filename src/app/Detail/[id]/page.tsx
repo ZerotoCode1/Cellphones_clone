@@ -17,6 +17,8 @@ import { popUp } from "@/Common/PopUp";
 import RattingModal from "./Children/Modal/RattingModal";
 import SaticsRate from "./Children/SaticsRate";
 import TotalStaticRate from "./Children/TotalStaticRate";
+import { useStoreCart } from "@/Lib/Store/CartStore/CartStore";
+import Link from "next/link";
 
 interface PropDetailProdcut {
   params: { id: string };
@@ -32,6 +34,9 @@ const DetailProduct = (prop: PropDetailProdcut) => {
     hasImage: false,
   });
   const [showModalRatting, setShowRatting] = useState<boolean>(false);
+  const [priceVersion, setPriceVersion] = useState<number>(0);
+  const addToCart = useStoreCart((state) => state.addToCart);
+
   const router = useRouter();
   const [filterRatting, setFilterRatting] = useState<{
     all?: boolean;
@@ -87,7 +92,22 @@ const DetailProduct = (prop: PropDetailProdcut) => {
     setStar((pre) => ({ star: index, hasImage: pre?.hasImage ?? false }));
     setFilterRatting((pre) => ({ ...pre, all: false }));
   };
-  console.log(filterRatting, "fsfds");
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: id,
+      img: data?.image[0] ?? "",
+      titleProduct: data?.productName ?? "",
+      price: priceVersion,
+      salePrice: priceVersion,
+      quantity: 1,
+      noneCheck: false,
+    });
+  };
+  const handleActivePrice = (index: number, price: number) => {
+    setColorVersion(index);
+    setPriceVersion(price);
+  };
   return (
     <div>
       <div className="h-[30px] sadow-global w-full">
@@ -147,7 +167,12 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                 <>
                   <div
                     className="relative"
-                    onClick={() => setColorVersion(index)}
+                    onClick={() =>
+                      handleActivePrice(
+                        index,
+                        data?.version[version]?.priceVersion
+                      )
+                    }
                   >
                     <div
                       className={`rounded-[8px] min-w-[158px] min-h-[50px]
@@ -187,17 +212,19 @@ const DetailProduct = (prop: PropDetailProdcut) => {
               </div>
             </div>
             <div className="show-price">
-              <p className="text-[#fd2424] font-semibold">6690000đ</p>
-              <p className="line-through">{conVertPrice(6690000)}</p>
+              <p className="text-[#fd2424] font-semibold">{priceVersion}</p>
+              <p className="line-through">{conVertPrice(priceVersion)}</p>
             </div>
           </div>
           <div
             className="text-left flex w-full justify-between mt-5"
             style={{ width: "calc(100% - 80px)" }}
           >
-            <button className="btn-buy" onClick={() => router.push("/cart")}>
-              <p>Mua ngay</p>
-              <span>(Giao nhanh 2 giờ hoặc nhận tại cửa hàng)</span>
+            <button className="btn-buy" onClick={handleAddToCart}>
+              <Link href="/cart">
+                <p>Mua ngay</p>
+                <span>(Giao nhanh 2 giờ hoặc nhận tại cửa hàng)</span>
+              </Link>
             </button>
             <div className="img-cart">
               <Image
@@ -261,26 +288,7 @@ const DetailProduct = (prop: PropDetailProdcut) => {
               <p className="text-left font-semibold">
                 Đánh giá & nhận xét {data.productName}
               </p>
-              {/* <div
-                className="grid grid-cols-10 py-5 min-h-[180px]"
-                style={{ borderBottom: "1px solid #ccc" }}
-              >
-                <div
-                  className="col-span-3 justify-center items-center flex flex-col gap-y-2"
-                  style={{ borderRight: "1px solid #ccc" }}
-                >
-                  <p className="text-left">5</p>
-                  <Rate
-                    disabled
-                    defaultValue={5}
-                    style={{ fontSize: "16px" }}
-                  />
-                  <p>188 đánh giá</p>
-                </div>
-                <div className="col-span-7 px-12 gap-y-2 flex flex-col">
-                  <SaticsRate productId={id} />
-                </div>
-              </div> */}
+
               <TotalStaticRate productId={id} />
               <div
                 className="min-h-[120px] flex flex-col justify-center items-center gap-3"

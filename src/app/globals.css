@@ -469,6 +469,16 @@ input[type="radio"]:checked {
   color: #ffbf00 !important;
 }
 /* fix lỗi UI */
-.ant-select-selector {
-  /* text-align: left !important; */
+:where(
+    .css-dev-only-do-not-override-3rel02
+  ).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus,
+:where(
+    .css-dev-only-do-not-override-3rel02
+  ).ant-input-outlined.ant-input-status-error:not(
+    .ant-input-disabled
+  ):focus-within {
+  border-color: #ff4d4f;
+  box-shadow: none;
+  outline: 0;
+  background-color: #ffffff;
 }

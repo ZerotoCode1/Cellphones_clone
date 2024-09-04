@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SourceIcon } from "@/Components/Iconsvg";
 import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
+import { useStoreCart } from "@/Lib/Store/CartStore/CartStore";
 export interface PropCartItem {
   id: string;
   img: string;
@@ -15,27 +16,40 @@ export interface PropCartItem {
 }
 const CartItem = (prop: PropCartItem) => {
   const { img, titleProduct, price, salePrice, quantity, id, noneCheck } = prop;
+  const pathName =
+    window.location.pathname === "/cart/payment-info" ? false : true;
   const addCart = useStoreCartPriview((state) => state.setAddCartPriview);
   const removeCart = useStoreCartPriview((state) => state.setRemoveCartPriview);
   const caculatePrice = useStoreCartPriview((state) => state.CaculateTotal);
+
+  const deleteCart = useStoreCart((state) => state.deleteCart);
+  const increase = useStoreCart((state) => state.increase);
+  const decrease = useStoreCart((state) => state.decrease);
+  const listProduct = useStoreCart((state) => state.lisProDuct);
+
   const handleChecked = (e: any) => {
-    if (e.target.checked) {
-      addCart({
-        id: id,
-        img: img,
-        titleProduct: titleProduct,
-        price: price,
-        salePrice: salePrice,
-        quantity: quantity,
-      });
-    } else {
-      removeCart(id);
+    const productAdd = listProduct.find((item) => item.id === id);
+    if (productAdd) {
+      if (e.target.checked) {
+        console.log(productAdd, "fsfsdfsd");
+        addCart(productAdd);
+      } else {
+        removeCart(id);
+      }
     }
     caculatePrice();
   };
   const hanDleteCart = () => {
-    removeCart(id);
+    deleteCart(id);
     caculatePrice();
+  };
+  const handleIncrease = () => {
+    increase(id);
+  };
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      decrease(id);
+    }
   };
   return (
     <div
@@ -44,7 +58,7 @@ const CartItem = (prop: PropCartItem) => {
     >
       <div className="flex gap-x-10">
         <div className="gap-x-2 flex gap-[35px]">
-          {!noneCheck && (
+          {/* {!noneCheck && (
             <label className="container-input-custom">
               <input type="checkbox" onChange={handleChecked} />
               <span
@@ -52,7 +66,18 @@ const CartItem = (prop: PropCartItem) => {
                 style={{ height: "18px", width: "18px" }}
               ></span>
             </label>
+          
+          )} */}
+          {pathName && (
+            <input
+              type="checkbox"
+              className="custom-control-input"
+              value="true"
+              id="__BVID__32"
+              onChange={handleChecked}
+            ></input>
           )}
+          <label className="custom-control-label"></label>
           <Image width={100} height={100} src={img} alt="" />
         </div>
         <div className="w-full">
@@ -60,14 +85,16 @@ const CartItem = (prop: PropCartItem) => {
             <Link href={"fsfd"} className="hover:underline text-[16px]">
               {titleProduct}
             </Link>
-            <span className="cursor-pointer" onClick={hanDleteCart}>
-              <SourceIcon.Delete />
-            </span>
+            {pathName && (
+              <span className="cursor-pointer" onClick={hanDleteCart}>
+                <SourceIcon.Delete />
+              </span>
+            )}
           </div>
           <div className="flex justify-between items-center">
             <span>
               <span className="color-default mr-2">
-                {price.toLocaleString("vi-VN", {
+                {(price * quantity).toLocaleString("vi-VN", {
                   style: "currency",
                   currency: "VND",
                 })}
@@ -80,15 +107,25 @@ const CartItem = (prop: PropCartItem) => {
               </span>
             </span>
             <div className="flex justify-center items-center">
-              <span className="flex bg-[#f3f3f3] w-[30px] h-[30px] rounded-[4px] items-center justify-center cursor-pointer">
-                -
-              </span>
-              <span className="w-[30px] h-[30px] flex justify-center items-center">
+              {pathName && (
+                <span
+                  className="flex bg-[#f3f3f3] w-[30px] h-[30px] rounded-[4px] items-center justify-center cursor-pointer"
+                  onClick={handleDecrease}
+                >
+                  -
+                </span>
+              )}
+              <span className="w-[30px] h-[30px] flex justify-center items-center flex-row">
                 {quantity}
               </span>
-              <span className="flex bg-[#f3f3f3] w-[30px] h-[30px] justify-center items-center rounded-[4px] cursor-pointer">
-                +
-              </span>
+              {pathName && (
+                <span
+                  className="flex bg-[#f3f3f3] w-[30px] h-[30px] justify-center items-center rounded-[4px] cursor-pointer"
+                  onClick={handleIncrease}
+                >
+                  +
+                </span>
+              )}
             </div>
           </div>
         </div>

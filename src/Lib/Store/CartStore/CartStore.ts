@@ -7,17 +7,19 @@ type State = {
   totalPrice: number;
 };
 type Action = {
-  setAddCartPriview: (lisProDuct: PropCartItem) => void;
-  setRemoveCartPriview: (id: string) => void;
+  addToCart: (lisProDuct: PropCartItem) => void;
+  deleteCart: (id: string) => void;
   CaculateTotal: () => void;
+  decrease: (id: string) => void;
+  increase: (id: string) => void;
 };
 
-export const useStoreCartPriview = create<State & Action>()(
+export const useStoreCart = create<State & Action>()(
   persist(
     (set, get) => ({
       lisProDuct: [],
       totalPrice: 0,
-      setAddCartPriview: (cartitem) =>
+      addToCart: (cartitem) =>
         set((state) => {
           const exists = state.lisProDuct.some(
             (product) => product.id === cartitem.id
@@ -25,16 +27,45 @@ export const useStoreCartPriview = create<State & Action>()(
           if (!exists) {
             return { lisProDuct: [...state.lisProDuct, cartitem] };
           } else {
-            return state;
+            return {
+              lisProDuct: state.lisProDuct.map((product) =>
+                product.id === cartitem.id
+                  ? { ...product, quantity: product.quantity + 1 }
+                  : product
+              ),
+            };
           }
         }),
-      setRemoveCartPriview: (id: string) =>
+      deleteCart: (id: string) =>
         set((state) => {
           const dataRemove = state.lisProDuct.filter(
             (product) => product.id !== id
           );
           return { lisProDuct: dataRemove };
         }),
+      increase: (id) => {
+        set((state) => {
+          const editQuantity = state.lisProDuct.map((product) =>
+            product.id === id
+              ? {
+                  ...product,
+                  quantity: product.quantity + 1,
+                }
+              : product
+          );
+          return { lisProDuct: editQuantity };
+        });
+      },
+      decrease(id) {
+        set((state) => {
+          const dataRemove = state.lisProDuct.map((product) =>
+            product.id === id
+              ? { ...product, quantity: product.quantity - 1 }
+              : product
+          );
+          return { lisProDuct: dataRemove };
+        });
+      },
       CaculateTotal: () =>
         set((state) => {
           const totalPrice = state.lisProDuct.reduce((acc, product) => {
@@ -43,6 +74,6 @@ export const useStoreCartPriview = create<State & Action>()(
           return { totalPrice: totalPrice };
         }),
     }),
-    { name: "cartPriview", skipHydration: true }
+    { name: "cart", skipHydration: true }
   )
 );

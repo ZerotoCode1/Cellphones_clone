@@ -9,4 +9,5 @@ export const rootRequest = {
   PROFILE: "/userId",
   REFECTH_TOKEN: "/refreshToken",
   RESGISTER: "/create",
+  ZALO_PAUMENT: "/zalopayment",
 };

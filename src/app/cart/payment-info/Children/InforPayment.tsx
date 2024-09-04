@@ -1,14 +1,12 @@
 "use client";
 import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
-import { Field, useFormikContext, FormikValues } from "formik";
+import { Tabs, TabsProps } from "antd";
 import { useEffect, useState } from "react";
 import CartItem from "../../Components/CartItem";
-import { Checkbox, Tabs, TabsProps } from "antd";
-import { CommonForm } from "@/Common/Form";
-import TabInforItems from "./components/TabInforItems";
 import InforAtStore from "./components/InforAtStore";
 import InforDelivery from "./components/InforDelivery";
-import { BASE_ROUTER } from "@/Components/Contant/apiUrl";
+import TabInforItems from "./components/TabInforItems";
+import { formAntd } from "@/Common/FormAntd";
 
 interface InforPaymentProps {
   handleChange: any;
@@ -18,11 +16,8 @@ const InforPayment = (prop: InforPaymentProps) => {
   const cartList = useStoreCartPriview((state) => state.lisProDuct);
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { values } = useFormikContext<FormikValues>();
-  const { email } = values;
   useEffect(() => {
     useStoreCartPriview.persist.rehydrate();
-    console.log("fsdfsdsdf", cartList);
     // if (cartList.length === 0) {
     //   window.location.href = BASE_ROUTER.CART;
     // }
@@ -34,18 +29,19 @@ const InforPayment = (prop: InforPaymentProps) => {
   const onChangeChecked = () => {
     setIsChecked(!isChecked);
   };
+  console.log(isChecked, "isChecked");
 
   const items: TabsProps["items"] = [
     {
       key: TabsKey.atStore,
       label: <TabInforItems label="Nhận tại cửa hàng" isCheck={!isChecked} />,
-      children: <InforAtStore />,
+      children: <InforAtStore active={!isChecked} />,
       style: { padding: "0 20px 20px 20px" },
     },
     {
       key: TabsKey.delivery,
       label: <TabInforItems label="Giao hàng tận nơi" isCheck={isChecked} />,
-      children: <InforDelivery />,
+      children: <InforDelivery active={isChecked} />,
       style: { padding: "0 20px 20px 20px" },
     },
   ];
@@ -79,7 +75,9 @@ const InforPayment = (prop: InforPaymentProps) => {
         </p>
       </div>
       <div>
-        <p>Thông tin khách hàng</p>
+        <p className="text-[#212b36] text-[16px] font-medium mb-[10px] uppercase text-left">
+          Thông tin khách hàng
+        </p>
         <div className="p-5 component-box min-h-[148px]">
           <div className="flex justify-between">
             <span className="text-[16px] text-[#0e2431] font-semibold">
@@ -87,28 +85,27 @@ const InforPayment = (prop: InforPaymentProps) => {
             </span>
             <span>0868896711</span>
           </div>
-          <div>
-            <Field
-              component={CommonForm.InpurFiled}
-              name="email"
+          <div className="text-left">
+            <formAntd.InputAntd
               label="Email"
-              placeholder="Email"
+              name="mail"
+              plaholder="Nhập email"
+              validate={{
+                required: true,
+                message: "Vui lòng nhập email!",
+              }}
             />
             <p className="text-[10px] text-[#919eab] mt-1 mb-[25px]">
               (*) Hóa đơn VAT sẽ được gửi qua email này
             </p>
-            {email && (
-              <Field
-                component={CommonForm.ChecBoxfield}
-                name="getnotiMail"
-                label="Gửi hóa đơn VAT qua email"
-              />
-            )}
+            {/* <formAntd.InputAntd label="" name="mail" plaholder="" /> */}
           </div>
         </div>
       </div>
-      <div>
-        <p>Thông tin nhận hàng</p>
+      <div className="mt-[30px]">
+        <p className="text-[#212b36] text-[16px] font-medium mb-[10px] uppercase text-left">
+          Thông tin nhận hàng
+        </p>
         <div className="component-box min-h-[274px]">
           <Tabs
             items={items}

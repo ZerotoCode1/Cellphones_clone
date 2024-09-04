@@ -34,9 +34,9 @@ const Ratting = (props: Props) => {
   return (
     <div className="">
       {rate.map((item: any, index: number) => (
-        <>
-          <User userId={item?.user} createdAt={item?.createdAt} key={index} />
-          <div className="ml-[65px]" key={index}>
+        <div key={index}>
+          <User userId={item?.user} createdAt={item?.createdAt} />
+          <div className="ml-[65px]">
             <div className="flex gap-4 mb-2">
               <Rate
                 disabled
@@ -47,7 +47,7 @@ const Ratting = (props: Props) => {
             <p className="text-left mb-3">{item?.comment}</p>
             <Image src={item?.image} width={50} height={50} alt="" />
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

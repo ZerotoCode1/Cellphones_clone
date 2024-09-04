@@ -15,7 +15,7 @@ const CardItem = (prop: CardItemProps) => {
   const handleDetail = () => {
     router.push(`/Detail/${productItem._id}`);
   };
-  const image = productItem?.image[0].split(",")[0];
+  const image = productItem?.image[0]?.split(",")[0];
   return (
     <>
       <div

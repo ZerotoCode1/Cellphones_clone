@@ -5,11 +5,13 @@ interface InputAntdProps {
   plaholder: string;
   label: string;
   name: string;
+  validate?: any;
 }
+
 const InputAntd = (props: InputAntdProps) => {
-  const { plaholder, label, name } = props;
+  const { plaholder, label, name, validate } = props;
   return (
-    <Form.Item name={name}>
+    <Form.Item name={name} rules={[validate]}>
       <div className="box-input-form">
         <Input className="custom-input" placeholder={plaholder} />
         <div className="box-input__line"></div>
