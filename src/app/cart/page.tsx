@@ -9,10 +9,16 @@ import CartItem, { PropCartItem } from "./Components/CartItem";
 const Cart = () => {
   const toTalPrice = useStoreCartPriview((state) => state.totalPrice);
   const quannity = useStoreCartPriview((state) => state.lisProDuct.length);
+  const caculatePrice = useStoreCartPriview((state) => state.CaculateTotal);
+  const setDefaultPreviewCart = useStoreCartPriview(
+    (state) => state.setDefaultCartPriview
+  );
+
   const listProduct = useStoreCart((state) => state.lisProDuct);
 
   useEffect(() => {
     useStoreCart.persist.rehydrate();
+    caculatePrice();
     if (toTalPrice > 0) {
       document
         .querySelector(".btn-buy")
@@ -23,7 +29,10 @@ const Cart = () => {
         ?.classList.remove("bg-[#c41717]", "text-white");
     }
     return () => {};
-  }, [toTalPrice]);
+  }, [caculatePrice, toTalPrice]);
+  useEffect(() => {
+    setDefaultPreviewCart();
+  }, [setDefaultPreviewCart]);
   return (
     <>
       <div className="">
@@ -37,13 +46,6 @@ const Cart = () => {
             </div>
             <p className="text-[18px] font-semibold">Giỏ hàng của bạn</p>
           </div>
-          <div className="flex w-full mt-4">
-            <label className="container-input flex justify-center items-center">
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-              Chọn tất cả
-            </label>
-          </div>
           <div>
             {listProduct?.map((item, index) => (
               <>
@@ -55,6 +57,8 @@ const Cart = () => {
                   titleProduct={item.titleProduct}
                   key={index}
                   id={item.id}
+                  keyColor={item?.keyColor}
+                  id_version={item?.id_version}
                 />
               </>
             ))}
@@ -69,7 +73,7 @@ const Cart = () => {
           }}
         >
           <div>
-            <p>
+            <p className="text-left">
               Tạm tính:
               <span className="text-[#D70018] font-bold">
                 {toTalPrice.toLocaleString("vi-VN", {
@@ -85,7 +89,11 @@ const Cart = () => {
               toTalPrice > 0 ? `${BASE_ROUTER.PAYMENT_INFORE}?tab=Info` : ""
             }
           >
-            <button className="bg-[#C0C0C0] w-[110px] h-10 rounded-[5px] text-[#717171] btn-buy">
+            <button
+              className={`w-[110px] h-10 rounded-[5px]  ${
+                quannity ? "btn-buy-cart " : "btn-disabled"
+              }  `}
+            >
               Mua ngay {quannity > 0 ? `(${quannity})` : ""}
             </button>
           </Link>

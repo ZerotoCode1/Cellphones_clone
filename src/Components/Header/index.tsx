@@ -7,7 +7,7 @@ import { BASE_ROUTER } from "../Contant/apiUrl";
 const Header = () => {
   return (
     <div className="sticky top-0 left-0 w-full z-50">
-      <HeaderBanner />
+      {/* <HeaderBanner /> */}
       <header className="h-[64px] bg-[#d70018] flex items-center justify-center min-w-[100%] ">
         <Link href={BASE_ROUTER.HOME}>
           <Image
@@ -62,9 +62,11 @@ const Header = () => {
             </div>
           </Link>
           <div className="box-category">
-            <button>
-              <SourceIcon.Account />
-            </button>
+            <Link href={BASE_ROUTER.USERSYSTEM}>
+              <button>
+                <SourceIcon.Account />
+              </button>
+            </Link>
           </div>
         </div>
       </header>

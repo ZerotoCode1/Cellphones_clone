@@ -94,6 +94,7 @@ const DetailProduct = (prop: PropDetailProdcut) => {
   };
 
   const handleAddToCart = () => {
+    if (!data) return;
     addToCart({
       id: id,
       img: data?.image[0] ?? "",
@@ -102,11 +103,38 @@ const DetailProduct = (prop: PropDetailProdcut) => {
       salePrice: priceVersion,
       quantity: 1,
       noneCheck: false,
+      id_version: data?.version?.[version]?._id,
+      keyColor:
+        Object.keys(data?.version?.[version]?.quannity[colorVersion])?.[0] ??
+        "",
     });
   };
+  console.log(version);
+
   const handleActivePrice = (index: number, price: number) => {
     setColorVersion(index);
     setPriceVersion(price);
+  };
+  useEffect(() => {
+    if (data?.version) {
+      setPriceVersion(data?.version[version].priceVersion);
+    }
+  }, [data, version]);
+  const handleOnlyAddCart = () => {
+    if (!data) return;
+    addToCart({
+      id: id,
+      img: data?.image[0] ?? "",
+      titleProduct: data?.productName ?? "",
+      price: priceVersion,
+      salePrice: priceVersion,
+      quantity: 1,
+      noneCheck: false,
+      id_version: data?.version?.[version]?._id,
+      keyColor:
+        Object.keys(data?.version?.[version]?.quannity[colorVersion])?.[0] ??
+        "",
+    });
   };
   return (
     <div>
@@ -147,12 +175,12 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                   <div className="relative">
                     <div
                       className={`rounded-[8px] min-w-[158px] min-h-[50px] border-version ${
-                        version === index && " active-version"
+                        version === index && "active-version"
                       } `}
                       onClick={() => setVersion(index)}
                     >
                       <p className="font-semibold">{item?.nameVersion}</p>
-                      <p>{item?.priceVersion}</p>
+                      <p>{conVertPrice(item?.priceVersion)}</p>
                     </div>
                   </div>
                 </>
@@ -182,15 +210,19 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                       p-x-[5px] py-[4px] gap-2 justify-center
                       `}
                     >
-                      <Image
+                      <img
                         src={renderUrlImage(Object.keys(item)[0])}
-                        alt=""
+                        alt="fsdf"
                         height={50}
                         width={50}
                       />
                       <div>
                         <p className="font-medium">{Object.keys(item)[0]}</p>
-                        <p>{data?.version[version]?.priceVersion}</p>
+                        <p>
+                          {conVertPrice(
+                            Number(data?.version[version]?.priceVersion)
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -200,9 +232,9 @@ const DetailProduct = (prop: PropDetailProdcut) => {
           </div>
           <div className="price-buy">
             <div className="flex justify-center items-center">
-              <Image
+              <img
                 src="https://cdn2.cellphones.com.vn/x35,webp/media/icon/pdp-trade-icon.png"
-                alt=""
+                alt="fdsfsd"
                 height={35}
                 width={32}
               />
@@ -212,8 +244,12 @@ const DetailProduct = (prop: PropDetailProdcut) => {
               </div>
             </div>
             <div className="show-price">
-              <p className="text-[#fd2424] font-semibold">{priceVersion}</p>
-              <p className="line-through">{conVertPrice(priceVersion)}</p>
+              <p className="text-[#fd2424] font-semibold">
+                {conVertPrice(Number(priceVersion) ?? 0)}
+              </p>
+              <p className="line-through">
+                {conVertPrice(Number(data?.price) ?? 0)}
+              </p>
             </div>
           </div>
           <div
@@ -226,10 +262,10 @@ const DetailProduct = (prop: PropDetailProdcut) => {
                 <span>(Giao nhanh 2 giờ hoặc nhận tại cửa hàng)</span>
               </Link>
             </button>
-            <div className="img-cart">
-              <Image
+            <div className="img-cart" onClick={handleOnlyAddCart}>
+              <img
                 src="https://cdn2.cellphones.com.vn/insecure/rs:fill:50:0/q:70/plain/https://cellphones.com.vn/media/wysiwyg/add-to-cart.png"
-                alt=""
+                alt="gdfgdf"
                 height={30}
                 width={25}
                 className="m-auto"
@@ -387,30 +423,3 @@ const DetailProduct = (prop: PropDetailProdcut) => {
 };
 
 export default DetailProduct;
-const rattings = [
-  {
-    name: "5 ",
-    number: 12,
-    toTalRate: 16,
-  },
-  {
-    name: "4 ",
-    number: 4,
-    toTalRate: 16,
-  },
-  {
-    name: "3 ",
-    number: 0,
-    toTalRate: 16,
-  },
-  {
-    name: "2 ",
-    number: 0,
-    toTalRate: 16,
-  },
-  {
-    name: "1 ",
-    number: 0,
-    toTalRate: 16,
-  },
-];

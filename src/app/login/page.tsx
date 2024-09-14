@@ -7,7 +7,11 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import LogoLogin from "./assets/logologin.png";
 import "./styles.css";
+import { useRouter } from "next/navigation";
+import { BASE_ROUTER } from "@/Components/Contant/apiUrl";
 const Login = () => {
+  const navigate = useRouter();
+
   const onFinish: FormProps<RequestLogin>["onFinish"] = async (values) => {
     try {
       const res = await AuthServices.login(values);
@@ -17,8 +21,18 @@ const Login = () => {
           localStorage.setItem("token", res.data.accessToken);
           localStorage.setItem("refreshToken", res.data.refreshToken);
           localStorage.setItem("mail", values.mail);
+          const infor = await AuthServices.getPropFile({ _id: res.data?.user });
+          const data = infor.data;
+          const user = {
+            name: data?.name,
+            phone: data?.phone,
+            image: data?.image,
+            address: data?.address,
+            userId: res.data?.user,
+          };
+          localStorage.setItem("user", JSON.stringify(user));
         }
-        console.log(res.data, "fsfdsfd");
+        navigate.push(BASE_ROUTER.CART);
       } else {
         toast.error("Đăng nhập thất bại");
       }
@@ -36,7 +50,7 @@ const Login = () => {
   return (
     <div id="login-form" className="cps-container">
       <div className="cps-login__image">
-        <Image src={LogoLogin} height={100} width={100} alt="" />
+        <Image src={LogoLogin} height={100} width={100} alt="ship" />
         <h1>Đăng nhập với</h1>
       </div>
       <Form onFinish={onFinish}>

@@ -1,0 +1,122 @@
+.block-order-item {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 15px 10px 15px 5px;
+    position: relative;
+}
+.is-flex {
+    display: flex !important;
+}
+.block-order-item .order-item .order-item__img {
+    margin-left: 10px;
+    margin-right: 20px;
+    padding: 5px;
+}
+.block-order-item .order-item .order-item__info {
+    position: relative;
+    width: 100%;
+}
+
+.is-flex-direction-column {
+    flex-direction: column !important;
+}
+.block-order-item .order-item .order-item__info .info__title {
+    align-items: flex-start;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: space-between;
+}
+.order-status.cancelled {
+    background-color: #dfe3e8;
+    color: #717171;
+}
+.order-status {
+    border-radius: 3px;
+    font-size: 12px;
+    margin: 5px 0;
+    padding: 4px 10px;
+    white-space: nowrap;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+.block-order-item .order-item .order-item__info .info__group {
+    align-items: center;
+    margin-top: auto;
+}
+.is-justify-content-space-between {
+    justify-content: space-between !important;
+}
+.block-order-item .order-item .order-item__info .info__group .price {
+    color: #fd2424;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    margin-right: auto;
+}
+.block-order-item .order-item .order-item__info .info__group .group-btn-info .btn-info {
+    background: transparent;
+    border-radius: 3px;
+    box-shadow: 0 0 0 .5px #e0052b;
+    color: #e0052b;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 3px 10px;
+    position: relative;
+    white-space: nowrap;
+}
+.block-order-item .order-item .order-item__info .info__title p {
+    color: #999;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+.block-order-item .order-item .order-item__info .info__title span {
+    color: #4a4a4a;
+    font-size: 16px;
+}
+.block-order-item .order-item .order-item__info .info__sub-title {
+    color: #8a8a8a;
+    display: flex;
+    font-size: 12px;
+    gap: 10px;
+    height: 19px;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.mr-2 {
+    margin-right: .5rem !important;
+}
+.order-status.in-progress {
+    background-color: #f0ad4e; /* Màu sắc cho "Đang vận chuyển" */
+    color: #fff; /* Màu chữ cho phù hợp với nền */
+}
+
+.order-status.delivering {
+    background-color: #5bc0de; /* Màu sắc cho "Đang giao hàng" */
+    color: #fff; /* Màu chữ cho phù hợp với nền */
+}
+
+
+.btn-cancel {
+   background-color: #dc3545; /* Màu đỏ */
+    color: #fff; /* Màu chữ trắng để nổi bật trên nền đỏ */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100px;
+}
+.btn-cancel:hover {
+    background-color: #c82333; /* Màu đỏ đậm hơn khi di chuột qua */
+}
+
+.btn-cancel:focus {
+    outline: none; /* Loại bỏ viền khi nút được chọn */
+}

@@ -324,7 +324,24 @@ input[type="radio"]:checked {
   height: 60px;
   margin-bottom: 10px;
   outline: none;
-  width: calc(100% - 70px);
+  background-color: #c41717;
+  width: 80%;
+}
+.btn-buy-cart {
+  background: linear-gradient(#f52f32, #e11b1e);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  flex-direction: column;
+  height: 60px;
+  margin-bottom: 10px;
+  outline: none;
+  background-color: #c41717;
+}
+.btn-disabled{
+  background-color: silver;
+    color: #717171;
+    cursor: not-allowed;
 }
 .img-cart {
   background-color: initial;
@@ -481,4 +498,7 @@ input[type="radio"]:checked {
   box-shadow: none;
   outline: 0;
   background-color: #ffffff;
+}
+.ant-form-item-explain-error{
+  text-align: left !important;
 }

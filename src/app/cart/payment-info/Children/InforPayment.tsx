@@ -29,7 +29,6 @@ const InforPayment = (prop: InforPaymentProps) => {
   const onChangeChecked = () => {
     setIsChecked(!isChecked);
   };
-  console.log(isChecked, "isChecked");
 
   const items: TabsProps["items"] = [
     {
@@ -64,6 +63,8 @@ const InforPayment = (prop: InforPaymentProps) => {
               titleProduct={cartItem.titleProduct}
               key={index}
               noneCheck
+              id_version={cartItem.id_version}
+              keyColor={cartItem.keyColor}
             />
           ))}
         </div>
@@ -83,7 +84,7 @@ const InforPayment = (prop: InforPaymentProps) => {
             <span className="text-[16px] text-[#0e2431] font-semibold">
               Quang Phan
             </span>
-            <span>0868896711</span>
+            {/* <span>0868896711</span> */}
           </div>
           <div className="text-left">
             <formAntd.InputAntd
@@ -94,11 +95,11 @@ const InforPayment = (prop: InforPaymentProps) => {
                 required: true,
                 message: "Vui lòng nhập email!",
               }}
+              defaultValue={localStorage.getItem("mail")}
             />
             <p className="text-[10px] text-[#919eab] mt-1 mb-[25px]">
               (*) Hóa đơn VAT sẽ được gửi qua email này
             </p>
-            {/* <formAntd.InputAntd label="" name="mail" plaholder="" /> */}
           </div>
         </div>
       </div>

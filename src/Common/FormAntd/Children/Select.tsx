@@ -7,12 +7,14 @@ interface SelectAntdProps {
   plaholder: string;
   name: string;
   validate?: any;
+  onChnge?: any;
 }
 const SelectAntd = (props: SelectAntdProps) => {
-  const { options, plaholder, name, validate } = props;
+  const { options, plaholder, name, validate, onChnge } = props;
   return (
     <Form.Item name={name} rules={[validate]}>
       <Select
+        onChange={onChnge}
         className="custom-select"
         showSearch
         placeholder={plaholder}

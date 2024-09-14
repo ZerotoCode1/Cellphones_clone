@@ -30,7 +30,7 @@ const Register = () => {
   return (
     <div id="login-form" className="cps-container">
       <div className="cps-login__image">
-        <Image src={LogoLogin} height={100} width={100} alt="" />
+        <Image src={LogoLogin} height={100} width={100} alt="manisd" />
         <h1>Đăng ký với</h1>
       </div>
       <Form onFinish={onFinish}>

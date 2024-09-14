@@ -34,7 +34,7 @@ const RattingModal = (props: Props) => {
         <div className="flex gap-4 items-center">
           <Image
             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:100:100/q:90/plain/https://cellphones.com.vn/media/wysiwyg/cps-ant.png"
-            alt=""
+            alt="modal"
             height={90}
             width={90}
           />

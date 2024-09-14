@@ -16,7 +16,7 @@ const QandA = () => {
             maxLength={6}
             className="pl-[100px] p-4 min-h-[200px] max-h-[350px]"
           />
-          <Image
+          <img
             className="absolute top-12 left-0"
             src="https://account.cellphones.com.vn/_nuxt/img/Shipper_CPS3.77d4065.png"
             alt="account"

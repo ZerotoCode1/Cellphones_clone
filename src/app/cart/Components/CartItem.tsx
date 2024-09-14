@@ -1,10 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SourceIcon } from "@/Components/Iconsvg";
 import { useStoreCartPriview } from "@/Lib/Store/StorecartPriview";
 import { useStoreCart } from "@/Lib/Store/CartStore/CartStore";
+import ProductServices, {
+  ResponseProductById,
+} from "@/services/Products/Getproduct";
 export interface PropCartItem {
   id: string;
   img: string;
@@ -13,44 +16,105 @@ export interface PropCartItem {
   salePrice: number;
   quantity: number;
   noneCheck?: boolean;
+  id_version: string;
+  keyColor: string;
+  nameVersion?: string;
+  colorVersion?: string;
 }
 const CartItem = (prop: PropCartItem) => {
-  const { img, titleProduct, price, salePrice, quantity, id, noneCheck } = prop;
+  const {
+    img,
+    titleProduct,
+    price,
+    salePrice,
+    quantity,
+    id,
+    keyColor,
+    id_version,
+  } = prop;
   const pathName =
     window.location.pathname === "/cart/payment-info" ? false : true;
   const addCart = useStoreCartPriview((state) => state.setAddCartPriview);
   const removeCart = useStoreCartPriview((state) => state.setRemoveCartPriview);
   const caculatePrice = useStoreCartPriview((state) => state.CaculateTotal);
+  const increaseCartPrivew = useStoreCartPriview(
+    (state) => state.increaseCartPrivew
+  );
+  const decreasePriveiew = useStoreCartPriview(
+    (state) => state.decreasePriveiew
+  );
 
   const deleteCart = useStoreCart((state) => state.deleteCart);
   const increase = useStoreCart((state) => state.increase);
   const decrease = useStoreCart((state) => state.decrease);
   const listProduct = useStoreCart((state) => state.lisProDuct);
+  const [data, setData] = useState<ResponseProductById>();
+  const [maxQuanity, setMaxQuanity] = useState();
 
   const handleChecked = (e: any) => {
-    const productAdd = listProduct.find((item) => item.id === id);
+    const productAdd = listProduct.find(
+      (item) =>
+        item.id === id &&
+        item.keyColor === keyColor &&
+        item.id_version === id_version
+    );
     if (productAdd) {
+      productAdd.img =
+        data?.versionColor.find((item) => {
+          if (item?.name === keyColor) {
+            return item.image;
+          }
+        })?.image ?? "";
+      productAdd.nameVersion = data?.version.find(
+        (item) => item._id === id_version
+      )?.nameVersion;
       if (e.target.checked) {
-        console.log(productAdd, "fsfsdfsd");
         addCart(productAdd);
       } else {
-        removeCart(id);
+        removeCart(id, keyColor, id_version);
       }
     }
     caculatePrice();
   };
   const hanDleteCart = () => {
-    deleteCart(id);
+    deleteCart(id, keyColor, id_version);
     caculatePrice();
   };
   const handleIncrease = () => {
-    increase(id);
+    if (maxQuanity) {
+      increase(id, keyColor, id_version, maxQuanity);
+      increaseCartPrivew(id, keyColor, id_version, maxQuanity);
+    }
+    caculatePrice();
   };
   const handleDecrease = () => {
     if (quantity > 1) {
-      decrease(id);
+      decrease(id, keyColor, id_version);
+      decreasePriveiew(id, keyColor, id_version);
     }
+    caculatePrice();
   };
+  const fetchData = async () => {
+    try {
+      const res = await ProductServices.getProDuctById({
+        _id: id,
+      });
+      if (res?.data) {
+        setData(res.data);
+        setMaxQuanity(
+          res?.data?.version
+            .find((v) => v._id === id_version)
+            ?.quannity.find((v) => v[keyColor])?.[keyColor]
+        );
+      }
+    } catch (error) {}
+  };
+  useEffect(() => {
+    if (id && id_version && keyColor) {
+      fetchData();
+    }
+  }, [id, id_version, keyColor]);
+  console.log(maxQuanity, "sdfhsdjkhfjsd");
   return (
     <div
       className="bg-[#FFFFFF] rounded-[8px] h-full p-[10px] w-full mb-5"
@@ -78,12 +142,29 @@ const CartItem = (prop: PropCartItem) => {
             ></input>
           )}
           <label className="custom-control-label"></label>
-          <Image width={100} height={100} src={img} alt="" />
+          <img
+            width={100}
+            height={100}
+            src={
+              data?.versionColor.find((item) => {
+                if (item?.name === keyColor) {
+                  return item.image;
+                }
+              })?.image
+            }
+            alt="anh3"
+          />
         </div>
         <div className="w-full">
           <div className="flex justify-between w-full pr-[35px] mb-2">
             <Link href={"fsfd"} className="hover:underline text-[16px]">
-              {titleProduct}
+              {` 
+                ${titleProduct}
+                ${
+                  data?.version.find((item) => item._id === id_version)
+                    ?.nameVersion
+                } - ${keyColor}
+                  `}
             </Link>
             {pathName && (
               <span className="cursor-pointer" onClick={hanDleteCart}>
@@ -134,7 +215,7 @@ const CartItem = (prop: PropCartItem) => {
         <div className="flex gap-x-4">
           <SourceIcon.Gift />
           <div>
-            <p>Chương tình khuyến mãi</p>
+            <p className="text-left">Chương tình khuyến mãi</p>
             <ul style={{ listStyleType: "initial", marginLeft: "20px" }}>
               <li>Liên hệ hotline 1800.2097 để được GIÁ ĐẶC BIỆT</li>
             </ul>

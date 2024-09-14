@@ -1,0 +1,18 @@
+.container-systeminfor{
+        margin-left: 18px;
+    width: 927px;
+}
+.btn-change-user  .btn-form__submit {
+    background: #e0052b;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 20px auto 0;
+    padding: 11px 0;
+    text-align: center;
+    width: 100%;
+}

@@ -9,6 +9,8 @@ import { Suspense, useEffect, useState } from "react";
 import InforPayment from "./Children/InforPayment";
 import Payment from "./Children/Payment";
 import { info } from "console";
+import { toast } from "react-toastify";
+import servicesInstance from "@/Lib/Request/Services";
 const enum TabsKey {
   Info = "Info",
   Payment = "Payment",
@@ -31,8 +33,17 @@ const PaymentInfo = () => {
     setTab(key as TabsKey);
   };
   const onSubmit = async (values: any) => {
-    console.log(values, "values");
-    const data = { ...values };
+    const typeShip = localStorage.getItem("typeShip");
+    if (typeShip === "store") {
+      values.address = "";
+      values.recipientName = "";
+    } else {
+      values.addressStore = "";
+    }
+
+    const user = JSON.parse(localStorage.getItem("user") ?? "");
+
+    const data = { userId: user.userId, name: user.name, ...values };
     if (tab === TabsKey.Info) {
       setTab(TabsKey.Payment);
       localStorage.setItem("infoPayment", JSON.stringify(data));
@@ -49,12 +60,25 @@ const PaymentInfo = () => {
         item: JSON.stringify(listCartPriview),
         informationShip: JSON.stringify(inforPayment),
       };
-      try {
-        const response = await PaymentServices.paymentDynamic(body);
-        if (response && response?.data) {
-          window.location.href = response?.data.order_url;
-        }
-      } catch (error) {}
+      if (body.method === "storePayment") {
+        try {
+          const res = await servicesInstance.post("paymentHome", body);
+          console.log(res?.data, "fdsfds");
+          if (res?.data?.message) {
+            toast.success(res?.data?.message);
+            router.push("/");
+          }
+        } catch (error) {}
+      } else {
+        try {
+          const response = await PaymentServices.paymentDynamic(body);
+          if (response && response?.data) {
+            localStorage.removeItem("infoPayment");
+            localStorage.removeItem("cartPriview");
+            window.location.href = response?.data.order_url;
+          }
+        } catch (error) {}
+      }
     }
   };
   const handleChange = (e: any) => {};
@@ -71,9 +95,16 @@ const PaymentInfo = () => {
     },
   ];
   const [form] = Form.useForm();
-  form.getFieldsError();
-  console.log(form.getFieldsError(), "fsdfsdfsdf");
-  form.validateFields(["recipientName"]);
+
+  useEffect(() => {
+    const dataDefalue = JSON.parse(localStorage.getItem("user") ?? "");
+    form.setFieldsValue({
+      phone: dataDefalue?.phone,
+      mail: localStorage.getItem("mail") ?? "",
+      recipientName: dataDefalue?.name,
+      address: dataDefalue?.address,
+    });
+  }, [form, tab]);
   return (
     <div className="payment-tab">
       <Suspense fallback={<div>Loading...</div>}>

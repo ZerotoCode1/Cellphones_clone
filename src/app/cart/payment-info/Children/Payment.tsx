@@ -12,7 +12,7 @@ const Payment = () => {
   const cartList = useStoreCartPriview((state) => state.lisProDuct);
   const toTalPrice = useStoreCartPriview((state) => state.totalPrice);
   const [choosePayment, setChoosePayment] = useState(false);
-  const infoPayment = JSON.parse(localStorage.getItem("infoPayment") ?? "");
+  const infoPayment = JSON?.parse(localStorage.getItem("infoPayment") ?? "");
   // useEffect(() => {
   //   if (values?.saleCode) {
   //     document
@@ -28,9 +28,8 @@ const Payment = () => {
   const handleChoosepayment = () => {
     setChoosePayment(true);
   };
-  const shipAddress = infoPayment?.addressStore
-    ? infoPayment?.addressStore
-    : `${infoPayment?.address}, ${infoPayment?.ward}, ${infoPayment?.district}, ${infoPayment?.province}`;
+  const dataDefalue = JSON?.parse(localStorage.getItem("user") ?? "");
+
   return (
     <div className="mb-10">
       <div className="component-box min-h-[274px] p-5 flex flex-col gap-4">
@@ -97,11 +96,13 @@ const Payment = () => {
         <div className="component-box p-5 flex flex-col gap-y-4">
           <div className="flex justify-between">
             <span>Khách hàng</span>
-            <span className="font-medium">Quang Phan</span>
+            <span className="font-medium">{infoPayment?.name}</span>
           </div>
           <div className="flex justify-between">
             <span>Số điện thoại</span>
-            <span className="font-medium">0868896711</span>
+            <span className="font-medium">
+              {infoPayment?.phone ?? dataDefalue?.phone}
+            </span>
           </div>
           <div className="flex justify-between">
             <span>Email</span>
@@ -109,11 +110,15 @@ const Payment = () => {
           </div>
           <div className="flex justify-between">
             <span>Nhận hàng tại </span>
-            <span className="font-medium">{shipAddress}</span>
+            <span className="font-medium">
+              {infoPayment?.address || infoPayment?.addressStore}
+            </span>
           </div>
           <div className="flex justify-between">
             <span>Người nhận </span>
-            <span className="font-medium">{`${infoPayment?.recipientName} ${infoPayment?.phone}`}</span>
+            <span className="font-medium">{`${
+              infoPayment?.recipientName ?? infoPayment?.name
+            } ${infoPayment?.phone ?? dataDefalue?.phone}`}</span>
           </div>
         </div>
       </div>

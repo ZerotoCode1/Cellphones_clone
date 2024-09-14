@@ -82,7 +82,7 @@ const mocdata = [
     name: "Thanh toán tại cửa hàng",
     image:
       "https://cdn2.cellphones.com.vn/x400,webp,q100/media/payment-logo/COS.png",
-    path: "momopayment",
+    path: "storePayment",
   },
   {
     id: 2,

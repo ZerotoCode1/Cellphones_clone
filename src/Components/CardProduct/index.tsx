@@ -45,7 +45,7 @@ const CardProduct = (prop: CardProductProps) => {
       <div className="px-20 relative">
         <div className="flex justify-between mb-2">
           <h5 className="text-[22px] text-[#444444] font-bold">{title}</h5>
-          <div>
+          {/* <div>
             {seoData.map((item) => (
               <>
                 <button
@@ -57,7 +57,7 @@ const CardProduct = (prop: CardProductProps) => {
                 </button>
               </>
             ))}
-          </div>
+          </div> */}
         </div>
         <Swiper
           autoplay={

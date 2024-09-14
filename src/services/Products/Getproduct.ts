@@ -15,18 +15,19 @@ export interface ResponseProductById {
   numberTechnical: [];
   productName: string;
   image: string[];
-  price: string;
+  price: number;
   description: string;
   category_id: string;
   content: string;
   vdeo: string;
-  version: [quannity: [], data: [], priceVersion: any];
+  version: {quannity: [], data: [], priceVersion: any,_id:string , nameVersion:string}[];
   versionColor: [
     {
       name: string;
       image: string;
     }
   ];
+  quannityTotal:number
 }
 export type Response = AxiosResponse<{
   data: ResponseProduct[];

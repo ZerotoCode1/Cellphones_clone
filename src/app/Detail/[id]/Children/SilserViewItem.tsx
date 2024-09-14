@@ -135,9 +135,9 @@ const SilserViewItem = (props: SilserViewItemProps) => {
               }`}
               onClick={() => setActiveImage(index)}
             >
-              <Image
+              <img
                 src={item}
-                alt=""
+                alt="fffffff"
                 width={50}
                 height={50}
                 className="object-contain"
@@ -145,28 +145,29 @@ const SilserViewItem = (props: SilserViewItemProps) => {
             </div>
           </SwiperSlide>
         ))}
-        {versionColor.map((item, index) => {
-          return (
-            <SwiperSlide key={index}>
-              <div
-                className={`box-slide-view ${
-                  activeImage === index + image.length
-                    ? "box-slide-view-active"
-                    : ""
-                }`}
-                onClick={() => setActiveImage(image.length + index)}
-              >
-                <Image
-                  src={item.image}
-                  alt=""
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-            </SwiperSlide>
-          );
-        })}
+        {versionColor &&
+          versionColor.map((item, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <div
+                  className={`box-slide-view ${
+                    activeImage === index + image.length
+                      ? "box-slide-view-active"
+                      : ""
+                  }`}
+                  onClick={() => setActiveImage(image.length + index)}
+                >
+                  <img
+                    src={item?.image ?? ""}
+                    alt="tytrytytryrt"
+                    width={50}
+                    height={50}
+                    className="object-contain"
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
     </div>
   );

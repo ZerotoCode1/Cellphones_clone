@@ -45,7 +45,7 @@ const Ratting = (props: Props) => {
               />
             </div>
             <p className="text-left mb-3">{item?.comment}</p>
-            <Image src={item?.image} width={50} height={50} alt="" />
+            <img src={item?.image} width={50} height={50} alt="ẻwrew" />
           </div>
         </div>
       ))}
